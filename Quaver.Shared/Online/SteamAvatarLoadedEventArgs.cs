@@ -17,8 +17,6 @@ namespace Quaver.Shared.Online
 
         public SteamAvatarLoadedEventArgs(ulong steamId, Texture2D tex)
         {
-            SteamId = steamId;
-            Texture = tex;
         }
     }
 }

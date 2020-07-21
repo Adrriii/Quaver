@@ -39,14 +39,13 @@ using Quaver.Shared.Screens.Gameplay.UI.Multiplayer;
 using Quaver.Shared.Screens.Gameplay.UI.Offset;
 using Quaver.Shared.Screens.Gameplay.UI.Replays;
 using Quaver.Shared.Screens.Gameplay.UI.Scoreboard;
-using Quaver.Shared.Screens.Multiplayer;
 using Quaver.Shared.Screens.Result;
 using Quaver.Shared.Screens.Results;
 using Quaver.Shared.Screens.Select;
 using Quaver.Shared.Screens.Selection;
 using Quaver.Shared.Screens.Tournament.Gameplay;
 using Quaver.Shared.Skinning;
-using Steamworks;
+
 using Wobble;
 using Wobble.Assets;
 using Wobble.Graphics;
@@ -505,8 +504,7 @@ namespace Quaver.Shared.Screens.Gameplay
             // Use the replay's name for the scoreboard if we're watching one.
             var scoreboardName = Screen.InReplayMode ? Screen.LoadedReplay.PlayerName : ConfigManager.Username.Value;
 
-            var selfAvatar = ConfigManager.Username.Value == scoreboardName ? SteamManager.UserAvatars[SteamUser.GetSteamID().m_SteamID]
-                : UserInterface.UnknownAvatar;
+            var selfAvatar = UserInterface.UnknownAvatar;
 
             SelfScoreboard = new ScoreboardUser(Screen, ScoreboardUserType.Self, scoreboardName, null, selfAvatar,
                 ModManager.Mods)
@@ -517,26 +515,13 @@ namespace Quaver.Shared.Screens.Gameplay
 
             var users = new List<ScoreboardUser> {SelfScoreboard};
 
-            if (OnlineManager.CurrentGame != null && OnlineManager.CurrentGame.Ruleset == MultiplayerGameRuleset.Team)
-            {
-                // Blue Team
-                ScoreboardRight = new Scoreboard(ScoreboardType.Teams,
-                    OnlineManager.GetTeam(OnlineManager.Self.OnlineUser.Id) == MultiplayerTeam.Blue ? users : new List<ScoreboardUser>(), MultiplayerTeam.Blue)
-                {
-                    Parent = Container,
-                    Alignment = Alignment.TopLeft,
-                };
-            }
-
             var scoreboardType = OnlineManager.CurrentGame != null &&
                                  OnlineManager.CurrentGame.Ruleset == MultiplayerGameRuleset.Team
                                 ? ScoreboardType.Teams
                                 : ScoreboardType.FreeForAll;
 
             // Red team/normal leaderboard
-            ScoreboardLeft = new Scoreboard(scoreboardType,
-                OnlineManager.CurrentGame == null || OnlineManager.GetTeam(OnlineManager.Self.OnlineUser.Id) == MultiplayerTeam.Red ?
-                    users : new List<ScoreboardUser>()) { Parent = Container };
+            ScoreboardLeft = new Scoreboard(scoreboardType, new List<ScoreboardUser>()) { Parent = Container };
 
             ScoreboardLeft?.Users.ForEach(x => x.SetImage());
             ScoreboardRight?.Users.ForEach(x => x.SetImage());
@@ -597,16 +582,7 @@ namespace Quaver.Shared.Screens.Gameplay
                         Alignment = Alignment.MidLeft
                     };
 
-                    if (OnlineManager.CurrentGame != null &&
-                        OnlineManager.CurrentGame.Ruleset == MultiplayerGameRuleset.Team && OnlineManager.GetTeam(user.LocalScore.PlayerId) == MultiplayerTeam.Blue)
-                    {
-                        user.Scoreboard = ScoreboardRight;
-                        user.X = WindowManager.Width;
-                    }
-                    else
-                    {
-                        user.Scoreboard = ScoreboardLeft;
-                    }
+                    user.Scoreboard = ScoreboardLeft;
 
                     user.SetImage();
 
@@ -643,15 +619,7 @@ namespace Quaver.Shared.Screens.Gameplay
                         Alignment = Alignment.MidLeft
                     };
 
-                    if (OnlineManager.CurrentGame != null &&
-                        OnlineManager.CurrentGame.Ruleset == MultiplayerGameRuleset.Team && OnlineManager.GetTeam(user.LocalScore.PlayerId) == MultiplayerTeam.Blue)
-                    {
-                        user.Scoreboard = ScoreboardRight;
-                    }
-                    else
-                    {
-                        user.Scoreboard = ScoreboardLeft;
-                    }
+                    user.Scoreboard = ScoreboardLeft;
 
                     user.SetImage();
 
@@ -663,15 +631,7 @@ namespace Quaver.Shared.Screens.Gameplay
                     }
                 }
 
-                if (OnlineManager.CurrentGame != null && OnlineManager.CurrentGame.Ruleset == MultiplayerGameRuleset.Team &&
-                    OnlineManager.GetTeam(user.LocalScore.PlayerId) == MultiplayerTeam.Blue)
-                {
-                    ScoreboardRight.Users.Add(user);
-                }
-                else
-                {
-                    ScoreboardLeft.Users.Add(user);
-                }
+                ScoreboardLeft.Users.Add(user);
             }
 
             ScoreboardLeft.SetTargetYPositions();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Quaver.Server.Client;
 using Quaver.Shared.Online.API.Leaderboard;
-using Quaver.Shared.Screens.Download;
 using RestSharp;
 using Wobble.Assets;
 using Wobble.Logging;

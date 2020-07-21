@@ -101,7 +101,6 @@ namespace Quaver
 
             NativeAssemblies.Copy();
             ConfigManager.Initialize();
-            SteamManager.Initialize();
 
             try
             {

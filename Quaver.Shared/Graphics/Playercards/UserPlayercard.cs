@@ -340,9 +340,6 @@ namespace Quaver.Shared.Graphics.Playercards
         {
             Avatar.Image = UserInterface.UnknownAvatar;
 
-            if (User != null && SteamManager.UserAvatars != null && SteamManager.UserAvatars.ContainsKey((ulong) User.OnlineUser.SteamId))
-                Avatar.Image = SteamManager.UserAvatars[(ulong) User.OnlineUser.SteamId];
-
             Avatar.Border.Tint = Colors.GetUserChatColor(User?.OnlineUser?.UserGroups ?? UserGroups.Normal);
 
             Flag.Image = User != null ? Flags.Get(User?.OnlineUser?.CountryFlag) : Flags.Get("XX");

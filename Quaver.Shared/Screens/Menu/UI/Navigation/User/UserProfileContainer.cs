@@ -16,7 +16,6 @@ using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Scheduling;
-using Quaver.Shared.Screens.Download;
 using Quaver.Shared.Screens.Select;
 using Wobble.Bindables;
 using Wobble.Graphics;
@@ -96,9 +95,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation.User
                     break;
                 case SelectScreenView selectView:
                     NavbarButton = selectView?.Navbar.RightAlignedItems.First() as NavbarItemUser;
-                    break;
-                case DownloadScreenView downloadScreenView:
-                    NavbarButton = downloadScreenView?.Navbar.RightAlignedItems.First() as NavbarItemUser;
                     break;
             }
 
@@ -231,22 +227,10 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation.User
             switch (OnlineManager.Status.Value)
             {
                 case ConnectionStatus.Disconnected:
-                    status = "Disconnected";
+                    TextConnectionStatus.Text = "Offline";
                     break;
-                case ConnectionStatus.Connecting:
-                    status = "Connecting to the server...";
-                    break;
-                case ConnectionStatus.Connected:
-                    status = $"Logged in as: {OnlineManager.Self.OnlineUser.Username}";
-                    break;
-                case ConnectionStatus.Reconnecting:
-                    status = $"Reconnecting. Please wait";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
 
-            TextConnectionStatus.Text = status;
         }
 
         /// <summary>
@@ -269,32 +253,13 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation.User
             {
                 case ConnectionStatus.Disconnected:
                     LoginButton.OriginalColor = Color.LimeGreen;
-                    LoginButton.Text.Text = "Login";
+                    LoginButton.Text.Text = "Offline";
 
                     LoginButton.Animations.Clear();
                     LoginButton.Animations.Add(new Animation(AnimationProperty.X, Easing.OutQuint, LoginButton.X, 0, 225));
 
                     ViewProfileButton.Visible = false;
                     break;
-                case ConnectionStatus.Connecting:
-                    LoginButton.OriginalColor = Color.Lavender;
-                    LoginButton.Text.Text = "Please Wait...";
-                    break;
-                case ConnectionStatus.Connected:
-                    LoginButton.OriginalColor = Color.Crimson;
-                    LoginButton.Text.Text = "Log Out";
-
-                    LoginButton.Animations.Clear();
-                    LoginButton.Animations.Add(new Animation(AnimationProperty.X, Easing.OutQuint, LoginButton.X, 100, 225));
-
-                    ViewProfileButton.Visible = true;
-                    break;
-                case ConnectionStatus.Reconnecting:
-                    LoginButton.OriginalColor = Color.Lavender;
-                    LoginButton.Text.Text = "Please Wait...";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -308,17 +273,7 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation.User
             switch (OnlineManager.Status.Value)
             {
                 case ConnectionStatus.Disconnected:
-                    OnlineManager.Login();
                     break;
-                case ConnectionStatus.Connecting:
-                    break;
-                case ConnectionStatus.Connected:
-                    ThreadScheduler.Run(() => OnlineManager.Client?.Disconnect());
-                    break;
-                case ConnectionStatus.Reconnecting:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 

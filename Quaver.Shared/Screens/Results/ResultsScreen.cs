@@ -34,7 +34,6 @@ using Quaver.Shared.Scheduling;
 using Quaver.Shared.Screens.Gameplay;
 using Quaver.Shared.Screens.Gameplay.Rulesets.Input;
 using Quaver.Shared.Screens.Loading;
-using Quaver.Shared.Screens.Multi;
 using Quaver.Shared.Screens.Results.UI;
 using Quaver.Shared.Screens.Results.UI.Header.Contents.Tabs;
 using Quaver.Shared.Screens.Selection;
@@ -264,10 +263,7 @@ namespace Quaver.Shared.Screens.Results
         /// </summary>
         public void ExitToMenu()
         {
-            if (OnlineManager.CurrentGame != null)
-                Exit(() => new MultiplayerGameScreen());
-            else
-                Exit(() => new SelectionScreen());
+            Exit(() => new SelectionScreen());
         }
 
         /// <summary>
@@ -799,53 +795,7 @@ namespace Quaver.Shared.Screens.Results
                 Logger.Important($"Original Acc: {originalProcessor.Accuracy}% | Standard* Acc: {processor.Accuracy}%", LogType.Runtime);
             }
 
-            // Start score submission process
-            Logger.Important($"Beginning to submit score on map: {screen.MapHash} to the server...", LogType.Network);
-
-            var submissionMd5 = screen.MapHash;
-
-            // For un-submitted maps, ask the server if it knows about the MD5. If it doesn't and the map is non-Quaver,
-            // try the converted .qua MD5, too. If that fails and the user is a donator, upload the map.
-            if (Map.RankedStatus == RankedStatus.NotSubmitted)
-            {
-                var info = OnlineManager.Client?.RetrieveMapInfo(submissionMd5);
-
-                // For non-Quaver maps, try the .qua MD5 (and use that for upload).
-                if (info == null && Map.Game != MapGame.Quaver)
-                {
-                    submissionMd5 = Map.GetAlternativeMd5();
-                    Logger.Important($"Unsubmitted map not found by original MD5. Trying .qua MD5: {submissionMd5}...", LogType.Network);
-                    info = OnlineManager.Client?.RetrieveMapInfo(submissionMd5);
-                }
-
-                if (info == null)
-                {
-                    Logger.Important($"Unsubmitted map was not found on the server.", LogType.Network);
-
-                    if (!OnlineManager.IsDonator)
-                        // Non-donators can't upload maps.
-                        return false;
-
-                    // Map is not uploaded, so we have to provide the server with it.
-                    var success = OnlineManager.Client?.UploadUnsubmittedMap(Map.LoadQua(), submissionMd5, Map.Md5Checksum);
-
-                    // The map upload wasn't successful, so we can assume that our score shouldn't be submitted
-                    if (success != null && !success.Value)
-                    {
-                        Logger.Error($"Unsubmitted map upload was not successful. Skipping score submission", LogType.Network);
-                        return false;
-                    }
-
-                    Logger.Important($"Successfully uploaded unsubmitted map to the server!", LogType.Network);
-                }
-            }
-
             var scrollSpeed = Map.Mode == GameMode.Keys4 ? ConfigManager.ScrollSpeed4K.Value : ConfigManager.ScrollSpeed7K.Value;
-
-            // Submit score to the server...
-            OnlineManager.Client?.Submit(new OnlineScore(submissionMd5, replay, processor, scrollSpeed,
-                ModHelper.GetRateFromMods(ModManager.Mods), TimeHelper.GetUnixTimestampMilliseconds(),
-                SteamManager.PTicket));
 
             return true;
         }

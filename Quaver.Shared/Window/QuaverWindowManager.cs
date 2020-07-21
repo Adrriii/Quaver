@@ -2,10 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quaver.Shared.Screens;
-using Quaver.Shared.Screens.Downloading;
 using Quaver.Shared.Screens.Main;
-using Quaver.Shared.Screens.Multi;
-using Quaver.Shared.Screens.MultiplayerLobby;
 using Quaver.Shared.Screens.Music;
 using Quaver.Shared.Screens.Selection;
 using Quaver.Shared.Screens.Theater;
@@ -66,9 +63,6 @@ namespace Quaver.Shared.Window
                 {
                     case QuaverScreenType.Menu:
                     case QuaverScreenType.Select:
-                    case QuaverScreenType.Download:
-                    case QuaverScreenType.Lobby:
-                    case QuaverScreenType.Multiplayer:
                     case QuaverScreenType.Music:
                     case QuaverScreenType.Theatre:
                         return true;

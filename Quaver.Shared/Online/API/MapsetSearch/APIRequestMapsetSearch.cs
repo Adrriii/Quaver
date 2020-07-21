@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Quaver.API.Enums;
 using Quaver.Server.Client;
-using Quaver.Shared.Screens.Downloading.UI.Search;
 using RestSharp;
 using Wobble.Logging;
 
@@ -20,11 +19,11 @@ namespace Quaver.Shared.Online.API.MapsetSearch
 
         /// <summary>
         /// </summary>
-        private DownloadFilterMode Mode { get; }
+        private object Mode { get; }
 
         /// <summary>
         /// </summary>
-        private DownloadFilterRankedStatus Status { get; }
+        private object Status { get; }
 
         /// <summary>
         /// </summary>
@@ -116,7 +115,7 @@ namespace Quaver.Shared.Online.API.MapsetSearch
         /// <param name="minCombo"></param>
         /// <param name="maxCombo"></param>
         /// <param name="page"></param>
-        public APIRequestMapsetSearch(string query, DownloadFilterMode mode, DownloadFilterRankedStatus status, float minDiff,
+        public APIRequestMapsetSearch(string query, object mode, object status, float minDiff,
             float maxDiff, float minBpm, float maxBpm, int minLength, int maxLength, int minln, int maxln, int minPlayCount,
             int maxPlayCount, string startUploadDate, string endUploadDate, string startUpdateDate, string endUpdateDate,
             int minCombo, int maxCombo, int page)
@@ -219,40 +218,14 @@ namespace Quaver.Shared.Online.API.MapsetSearch
         /// <param name="request"></param>
         private void SetModeQueryParams(RestRequest request)
         {
-            // Game Mode Query Param
-            if (Mode == DownloadFilterMode.All)
-            {
-                foreach (DownloadFilterMode mode in Enum.GetValues(typeof(DownloadFilterMode)))
-                {
-                    if (mode == DownloadFilterMode.All)
-                        continue;
-
-                    request.AddQueryParameter("mode", ((int) mode).ToString());
-                }
-            }
-            else
-                request.AddQueryParameter("mode", ((int) Mode).ToString());
+            request.AddQueryParameter("mode", ((int) Mode).ToString());
         }
 
         /// <summary>
         /// </summary>
         private void SetStatusQueryParams(RestRequest request)
         {
-            // Ranked Status Query Param
-            if (Status == DownloadFilterRankedStatus.All)
-            {
-                foreach (DownloadFilterRankedStatus status in Enum.GetValues(typeof(DownloadFilterRankedStatus)))
-                {
-                    if (status == DownloadFilterRankedStatus.All)
-                        continue;
-
-                    request.AddQueryParameter("status", ((int) status).ToString());
-                }
-            }
-            else
-            {
-                request.AddQueryParameter("status", ((int) Status).ToString());
-            }
+            request.AddQueryParameter("status", ((int) Status).ToString());
         }
 
         /// <summary>

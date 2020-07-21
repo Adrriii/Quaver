@@ -4,7 +4,7 @@ using Quaver.Shared.Config;
 using Quaver.Shared.Graphics;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
-using Steamworks;
+
 using Wobble.Assets;
 using Wobble.Bindables;
 using Wobble.Graphics;
@@ -36,26 +36,6 @@ namespace Quaver.Shared.Screens.Results.UI.Header.Contents
                 Alignment = Alignment.MidCenter,
                 Image = UserInterface.ResultsAvatarMask
             };
-
-            if (SteamManager.UserAvatars != null)
-            {
-                var steamId = processor.Value.SteamId;
-
-                if (ConfigManager.Username.Value == processor.Value.PlayerName)
-                    steamId = SteamUser.GetSteamID().m_SteamID;
-
-                if (steamId != 0 && SteamManager.UserAvatarsLarge.ContainsKey(steamId))
-                {
-                    var tex = SteamManager.UserAvatarsLarge[steamId];
-
-                    if (tex != UserInterface.UnknownAvatar && SteamManager.UserAvatarsLarge.ContainsKey(steamId))
-                        Avatar.AvatarSprite.Image = tex;
-                    else if (tex == UserInterface.UnknownAvatar && SteamManager.UserAvatars.ContainsKey(steamId))
-                        Avatar.AvatarSprite.Image = SteamManager.UserAvatars[steamId];
-                    else
-                        Avatar.AvatarSprite.Image = UserInterface.UnknownAvatar;
-                }
-            }
         }
     }
 }

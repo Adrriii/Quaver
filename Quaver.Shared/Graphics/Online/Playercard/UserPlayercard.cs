@@ -15,7 +15,7 @@ using Quaver.Shared.Assets;
 using Quaver.Shared.Config;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
-using Steamworks;
+
 using Wobble;
 using Wobble.Assets;
 using Wobble.Bindables;
@@ -294,9 +294,6 @@ namespace Quaver.Shared.Graphics.Online.Playercard
             // ReSharper disable once DelegateSubtraction
             OnlineManager.Status.ValueChanged -= OnOnlineStatusChanged;
 
-            // ReSharper disable once DelegateSubtraction
-            SteamManager.SteamUserAvatarLoaded -= OnSteamAvatarLoaded;
-
             base.Destroy();
         }
 
@@ -327,24 +324,6 @@ namespace Quaver.Shared.Graphics.Online.Playercard
                 Image = UserInterface.UnknownAvatar,
                 UsePreviousSpriteBatchOptions = true
             };
-
-            SteamManager.SteamUserAvatarLoaded += OnSteamAvatarLoaded;
-
-            if (Type == PlayercardType.Self && SteamManager.UserAvatars.ContainsKey(SteamUser.GetSteamID().m_SteamID))
-                Avatar.Image = SteamManager.UserAvatars[SteamUser.GetSteamID().m_SteamID];
-            // We've got the user's avatar, so use it.
-            else if (User != null && SteamManager.UserAvatars.ContainsKey((ulong) User.OnlineUser.SteamId))
-                Avatar.Image = SteamManager.UserAvatars[(ulong) User.OnlineUser.SteamId];
-            // Need to retrieve user's avatar.
-            else
-            {
-                // Go with an unknown avatar for now until it's loaded.
-                Avatar.Image = UserInterface.UnknownAvatar;
-
-                if (User != null)
-                    SteamManager.SendAvatarRetrievalRequest((ulong) User.OnlineUser.SteamId);
-            }
-
             Avatar.AddBorder(Color.LightGray, 2);
         }
 

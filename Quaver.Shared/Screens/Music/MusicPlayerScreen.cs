@@ -15,7 +15,6 @@ using Quaver.Shared.Online;
 using Quaver.Shared.Screens.Importing;
 using Quaver.Shared.Screens.Main;
 using Quaver.Shared.Screens.Menu;
-using Quaver.Shared.Screens.Multiplayer;
 using Quaver.Shared.Screens.Selection.UI.FilterPanel;
 using Quaver.Shared.Screens.Selection.UI.FilterPanel.Search;
 using Wobble.Bindables;

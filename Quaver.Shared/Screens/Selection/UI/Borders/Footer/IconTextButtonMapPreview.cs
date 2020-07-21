@@ -19,10 +19,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Borders.Footer
 
                     if (activeLeftPanel.Value == SelectContainerPanel.MapPreview)
                     {
-                        if (game.CurrentScreen.Type == QuaverScreenType.Multiplayer)
-                            activeLeftPanel.Value = SelectContainerPanel.MatchSettings;
-                        else
-                            activeLeftPanel.Value = SelectContainerPanel.Leaderboard;
+                        activeLeftPanel.Value = SelectContainerPanel.Leaderboard;
                     }
                     else
                         activeLeftPanel.Value = SelectContainerPanel.MapPreview;

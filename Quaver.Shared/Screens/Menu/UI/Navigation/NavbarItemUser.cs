@@ -10,9 +10,8 @@ using Microsoft.Xna.Framework;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Config;
 using Quaver.Shared.Online;
-using Quaver.Shared.Screens.Download;
 using Quaver.Shared.Screens.Select;
-using Steamworks;
+
 using Wobble.Bindables;
 using Wobble.Graphics;
 using Wobble.Graphics.Animations;
@@ -52,7 +51,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation
             Alpha = 0f;
 
             CreateAvatar();
-            SteamManager.SteamUserAvatarLoaded += OnSteamAvatarLoaded;
 
             CreateUsername();
             CreateBottomLine();
@@ -84,9 +82,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation
             // ReSharper disable once DelegateSubtraction
             ConfigManager.Username.ValueChanged -= OnConfigUsernameChanged;
 
-            // ReSharper disable once DelegateSubtraction
-            SteamManager.SteamUserAvatarLoaded -= OnSteamAvatarLoaded;
-
             base.Destroy();
         }
 
@@ -95,11 +90,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation
         private void CreateAvatar()
         {
             var userAvatar = UserInterface.UnknownAvatar;
-
-            if (SteamManager.UserAvatars.ContainsKey(SteamUser.GetSteamID().m_SteamID))
-                userAvatar = SteamManager.UserAvatars[SteamUser.GetSteamID().m_SteamID];
-            else
-                SteamManager.SendAvatarRetrievalRequest(SteamUser.GetSteamID().m_SteamID);
 
             Avatar = new Sprite
             {
@@ -116,9 +106,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation
         /// </summary>
         private void OnSteamAvatarLoaded(object sender, SteamAvatarLoadedEventArgs e)
         {
-            if (e.SteamId != SteamUser.GetSteamID().m_SteamID)
-                return;
-
             Avatar.Animations.Clear();
             Avatar.Animations.Add(new Animation(AnimationProperty.Alpha, Easing.Linear, 0, 1, 300));
             Avatar.Image = e.Texture;
@@ -187,9 +174,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation
                     break;
                 case SelectScreenView selectView:
                     selectView.UserProfile?.PerformClickAnimation(Selected);
-                    break;
-                case DownloadScreenView downloadScreenView:
-                    downloadScreenView?.UserProfile?.PerformClickAnimation(Selected);
                     break;
             }
         }

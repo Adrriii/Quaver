@@ -20,7 +20,7 @@ using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Skinning;
-using Steamworks;
+
 using TimeAgo;
 using Wobble;
 using Wobble.Assets;
@@ -155,7 +155,6 @@ namespace Quaver.Shared.Screens.Select.UI.Leaderboard
         public override void Destroy()
         {
             // ReSharper disable once DelegateSubtraction
-            SteamManager.SteamUserAvatarLoaded -= OnAvatarLoaded;
             base.Destroy();
         }
 
@@ -220,27 +219,13 @@ namespace Quaver.Shared.Screens.Select.UI.Leaderboard
 
             if (Score.Name == ConfigManager.Username.Value)
             {
-                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-                if (SteamManager.UserAvatars.ContainsKey(SteamUser.GetSteamID().m_SteamID))
-                    Avatar.Image = SteamManager.UserAvatars[SteamUser.GetSteamID().m_SteamID];
-                else
-                    Avatar.Image = UserInterface.YouAvatar;
+                Avatar.Image = UserInterface.YouAvatar;
             }
             else if (Score.IsOnline)
             {
-                // Check to see if we have a Steam avatar for this user cached.
-                if (SteamManager.UserAvatars.ContainsKey((ulong) Score.SteamId))
-                {
-                    Avatar.Image = SteamManager.UserAvatars[(ulong) Score.SteamId];
-                    return;
-                }
 
                 Avatar.Alpha = 0;
                 Avatar.Image = UserInterface.YouAvatar;
-
-                // Otherwise we need to request for it.
-                SteamManager.SteamUserAvatarLoaded += OnAvatarLoaded;
-                SteamManager.SendAvatarRetrievalRequest((ulong) Score.SteamId);
             }
             else
             {

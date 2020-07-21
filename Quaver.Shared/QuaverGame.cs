@@ -43,14 +43,11 @@ using Quaver.Shared.Online.Chat;
 using Quaver.Shared.Scheduling;
 using Quaver.Shared.Screens;
 using Quaver.Shared.Screens.Beta;
-using Quaver.Shared.Screens.Downloading;
 using Quaver.Shared.Screens.Edit;
 using Quaver.Shared.Screens.Importing;
 using Quaver.Shared.Screens.Main;
 using Quaver.Shared.Screens.Menu;
 using Quaver.Shared.Screens.Menu.UI.Navigation.User;
-using Quaver.Shared.Screens.Multi;
-using Quaver.Shared.Screens.MultiplayerLobby;
 using Quaver.Shared.Screens.Music;
 using Quaver.Shared.Screens.Options;
 using Quaver.Shared.Screens.Selection;
@@ -94,7 +91,7 @@ using Quaver.Shared.Screens.Tests.Volume;
 using Quaver.Shared.Screens.Theater;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Window;
-using Steamworks;
+
 using Wobble;
 using Wobble.Audio.Samples;
 using Wobble.Audio.Tracks;
@@ -299,7 +296,6 @@ namespace Quaver.Shared
             base.LoadContent();
 
             PerformGameSetup();
-            SteamManager.SendAvatarRetrievalRequest(SteamUser.GetSteamID().m_SteamID);
 
             // Load all game assets.
             //Fonts.LoadGdiFonts();
@@ -355,9 +351,6 @@ namespace Quaver.Shared
                 return;
 
             base.Update(gameTime);
-
-            if (SteamManager.IsInitialized)
-                SteamAPI.RunCallbacks();
 
             if (!FirstUpdateCalled)
             {
@@ -686,10 +679,7 @@ namespace Quaver.Shared
                 case QuaverScreenType.Menu:
                 case QuaverScreenType.Select:
                 case QuaverScreenType.Editor:
-                case QuaverScreenType.Multiplayer:
-                case QuaverScreenType.Lobby:
                 case QuaverScreenType.Music:
-                case QuaverScreenType.Download:
                 case QuaverScreenType.Results:
                     DialogManager.Show(new OptionsDialog());
                     break;
@@ -896,15 +886,6 @@ namespace Quaver.Shared
                     break;
                 case QuaverScreenType.Select:
                     CurrentScreen?.Exit(() => new SelectionScreen());
-                    break;
-                case QuaverScreenType.Download:
-                    CurrentScreen?.Exit(() => new DownloadingScreen(CurrentScreen.Type));
-                    break;
-                case QuaverScreenType.Lobby:
-                    CurrentScreen?.Exit(() => new MultiplayerLobbyScreen());
-                    break;
-                case QuaverScreenType.Multiplayer:
-                    CurrentScreen?.Exit(() => new MultiplayerGameScreen());
                     break;
                 case QuaverScreenType.Music:
                     CurrentScreen?.Exit(() => new MusicPlayerScreen());

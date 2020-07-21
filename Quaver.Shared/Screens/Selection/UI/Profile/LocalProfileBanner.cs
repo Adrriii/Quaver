@@ -10,7 +10,7 @@ using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Screens.Menu.UI.Jukebox;
-using Steamworks;
+
 using Wobble.Assets;
 using Wobble.Bindables;
 using Wobble.Graphics;
@@ -112,14 +112,6 @@ namespace Quaver.Shared.Screens.Selection.UI.Profile
                 Image = UserInterface.UnknownAvatar,
                 Alpha = 0
             };
-
-            if (SteamManager.UserAvatars != null)
-            {
-                var id = SteamUser.GetSteamID().m_SteamID;
-
-                if (SteamManager.UserAvatars.ContainsKey(id))
-                    Avatar.Image = SteamManager.UserAvatars[id];
-            }
 
             Avatar.AddBorder(Color.Transparent, 2);
         }

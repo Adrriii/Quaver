@@ -5,7 +5,6 @@ using Quaver.Server.Client.Structures;
 using Quaver.Server.Common.Enums;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Graphics.Containers;
-using Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers.Scrolling;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Wobble.Graphics;
@@ -195,9 +194,6 @@ namespace Quaver.Shared.Graphics.Overlays.Chatting.Messages.Scrolling
             };
 
             var container = (ChatMessageScrollContainer) Container;
-
-            UsernameButton.Clicked += (sender, args) => container.ActivateRightClickOptions(new DrawableOnlineUserRightClickOptions(Item.Sender));
-            UsernameButton.RightClicked += (sender, args) => container.ActivateRightClickOptions(new DrawableOnlineUserRightClickOptions(Item.Sender));
         }
 
         /// <summary>

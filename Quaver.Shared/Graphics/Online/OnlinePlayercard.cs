@@ -9,7 +9,7 @@ using Quaver.Shared.Config;
 using Quaver.Shared.Graphics.Dialogs.Menu;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
-using Steamworks;
+
 using Wobble.Assets;
 using Wobble.Bindables;
 using Wobble.Graphics;
@@ -26,10 +26,6 @@ namespace Quaver.Shared.Graphics.Online
         /// <summary>
         /// </summary>
         private Sprite Background { get; }
-
-        /// <summary>
-        /// </summary>
-        private Sprite Avatar { get; }
 
         /// <summary>
         /// </summary>
@@ -80,26 +76,6 @@ namespace Quaver.Shared.Graphics.Online
             };
 
             Button.Clicked += OnButtonClicked;
-            Avatar = new Sprite()
-            {
-                Parent = this,
-                Alignment = Alignment.MidLeft,
-                Size = new ScalableVector2(Height * 0.75f, Height * 0.75f),
-                X = 12,
-                Image = SteamManager.UserAvatars[SteamUser.GetSteamID().m_SteamID]
-            };
-
-            Avatar.AddBorder(Color.White, 2);
-
-            Flag = new Sprite()
-            {
-                Parent = this,
-                Alignment = Alignment.MidLeft,
-                Y = -12,
-                Size = new ScalableVector2(24, 24),
-                X = Avatar.X + Avatar.Width + 10,
-                Image = Flags.Get("XX")
-            };
 
             Username = new SpriteTextBitmap(FontsBitmap.GothamRegular, ConfigManager.Username.Value)
             {
@@ -182,7 +158,6 @@ namespace Quaver.Shared.Graphics.Online
                 case ConnectionStatus.Connected:
                     Flag.Image = Flags.Get(OnlineManager.Self.OnlineUser.CountryFlag);
                     Username.Tint = Colors.GetUserChatColor(OnlineManager.Self.OnlineUser.UserGroups);
-                    Avatar.Border.Tint = Username.Tint;
 
                     if (OnlineManager.Self.Stats.ContainsKey(ConfigManager.SelectedGameMode.Value))
                     {

@@ -74,7 +74,6 @@ namespace Quaver.Shared.Screens.Music.UI.ListenerList
             CreateHostCrown();
             CreateMissingSongIcon();
 
-            SteamManager.SteamUserAvatarLoaded += OnAvatarLoaded;
             OnlineManager.Client.OnUserInfoReceived += OnUserInfoReceived;
             OnlineManager.Client.OnListeningPartyChangeHost += OnHostChanged;
             MapManager.Selected.ValueChanged += OnMapChanged;
@@ -99,7 +98,6 @@ namespace Quaver.Shared.Screens.Music.UI.ListenerList
         public override void Destroy()
         {
             // ReSharper disable twice DelegateSubtraction
-            SteamManager.SteamUserAvatarLoaded -= OnAvatarLoaded;
             OnlineManager.Client.OnUserInfoReceived -= OnUserInfoReceived;
             MapManager.Selected.ValueChanged -= OnMapChanged;
             OnlineManager.Client.OnListeningPartyUserMissingSong -= OnListeningPartyUserMissingSong;
@@ -125,17 +123,6 @@ namespace Quaver.Shared.Screens.Music.UI.ListenerList
                 var steamId = (ulong) Item.SteamId;
 
                 Avatar.ClearAnimations();
-
-                if (SteamManager.UserAvatars.ContainsKey(steamId))
-                {
-                    Avatar.Image = SteamManager.UserAvatars[steamId];
-                    Avatar.Alpha = 1;
-                }
-                else
-                {
-                    Avatar.Alpha = 0;
-                    SteamManager.SendAvatarRetrievalRequest(steamId);
-                }
 
                 Flag.Image = Flags.Get(Item.CountryFlag ?? "XX");
 

@@ -273,21 +273,6 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard
                 case LeaderboardType.Local:
                     scores = new ScoreFetcherLocal().Fetch(map);
                     break;
-                case LeaderboardType.Global:
-                    scores = new ScoreFetcherGlobal().Fetch(map);
-                    break;
-                case LeaderboardType.Mods:
-                    scores = new ScoreFetcherMods().Fetch(map);
-                    break;
-                case LeaderboardType.Country:
-                    scores = new ScoreFetcherCountry().Fetch(map);
-                    break;
-                case LeaderboardType.Rate:
-                    scores = new ScoreFetcherRate().Fetch(map);
-                    break;
-                case LeaderboardType.Friends:
-                    scores = new ScoreFetcherFriends().Fetch(map);
-                    break;
                 default:
                     scores = new FetchedScoreStore();
                     break;
@@ -383,8 +368,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard
         /// <param name="e"></param>
         private void OnModsChanged(object sender, ModsChangedEventArgs e)
         {
-            if (ConfigManager.LeaderboardSection == null ||
-                ConfigManager.LeaderboardSection.Value != LeaderboardType.Mods && ConfigManager.LeaderboardSection.Value != LeaderboardType.Rate)
+            if (ConfigManager.LeaderboardSection == null)
                 return;
 
             FetchScores();

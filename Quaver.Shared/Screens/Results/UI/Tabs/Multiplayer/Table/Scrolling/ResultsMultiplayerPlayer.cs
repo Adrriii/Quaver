@@ -122,10 +122,7 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Multiplayer.Table.Scrolling
         {
             Rank.Text = $"{index + 1}.";
 
-            if (SteamManager.UserAvatars != null && SteamManager.UserAvatars.ContainsKey(item.SteamId))
-                Avatar.Image = SteamManager.UserAvatars[item.SteamId];
-            else
-                Avatar.Image = UserInterface.UnknownAvatar;
+            Avatar.Image = UserInterface.UnknownAvatar;
 
             Username.Text = $"{item.PlayerName ?? ""}";
             Username.Tint = GetUsernameColor();

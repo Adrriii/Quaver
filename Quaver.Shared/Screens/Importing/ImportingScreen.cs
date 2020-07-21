@@ -15,8 +15,6 @@ using Quaver.Shared.Database.Settings;
 using Quaver.Shared.Online;
 using Quaver.Shared.Scheduling;
 using Quaver.Shared.Screens.Main;
-using Quaver.Shared.Screens.Multi;
-using Quaver.Shared.Screens.Multiplayer;
 using Quaver.Shared.Screens.Music;
 using Quaver.Shared.Screens.Select;
 using Quaver.Shared.Screens.Selection;
@@ -33,10 +31,6 @@ namespace Quaver.Shared.Screens.Importing
         /// <summary>
         /// </summary>
         public override QuaverScreenType Type { get; } = QuaverScreenType.Importing;
-
-        /// <summary>
-        /// </summary>
-        private MultiplayerScreen MultiplayerScreen { get; }
 
         /// <inheritdoc />
         /// <summary>
@@ -65,18 +59,6 @@ namespace Quaver.Shared.Screens.Importing
         /// </summary>
         /// <returns></returns>
         public override UserClientStatus GetClientStatus() => null;
-
-        /// <summary>
-        /// </summary>
-        public ImportingScreen(MultiplayerScreen multiplayerScreen = null, bool fromSelect = false, bool fullSync = false)
-        {
-            ComingFromSelect = fromSelect;
-            FullSync = fullSync;
-            MultiplayerScreen = multiplayerScreen;
-
-            PreviouslySelectedMap = MapManager.Selected.Value;
-            View = new ImportingScreenView(this);
-        }
 
         /// <inheritdoc />
         /// <summary>
@@ -114,43 +96,10 @@ namespace Quaver.Shared.Screens.Importing
         {
             Logger.Important($"Map import has completed", LogType.Runtime);
 
-            if (OnlineManager.CurrentGame != null)
-            {
-                MapManager.Selected.Value = PreviouslySelectedMap;
-
-                Exit(() =>
-                {
-                    if (ComingFromSelect)
-                        return new SelectionScreen();
-
-                    return new MultiplayerGameScreen();
-                });
-            }
-            else if (OnlineManager.ListeningParty != null)
-            {
-                Exit(() =>
-                {
-                    AudioEngine.LoadCurrentTrack();
-                    AudioEngine.Track.Play();
-
-                    OnlineManager.UpdateListeningPartyState(ListeningPartyAction.ChangeSong);
-
-                    return new MusicPlayerScreen();
-                });
-            }
-            else if (OnlineManager.IsSpectatingSomeone)
-            {
-                // TODO: Whenever handling multiple spectatee's, this should be reworked, but it's fine for now.
-                var spectatee = OnlineManager.SpectatorClients.First();
-                spectatee.Value.WatchUserImmediately();
-            }
+            if (MapManager.Mapsets.Count == 0)
+                Exit(() => new MainMenuScreen());
             else
-            {
-                if (MapManager.Mapsets.Count == 0)
-                    Exit(() => new MainMenuScreen());
-                else
-                    Exit(() => new SelectionScreen());
-            }
+                Exit(() => new SelectionScreen());
         }
     }
 }

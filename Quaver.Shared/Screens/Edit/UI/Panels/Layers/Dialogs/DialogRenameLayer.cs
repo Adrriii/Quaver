@@ -7,7 +7,6 @@ using Quaver.Shared.Graphics;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Screens.Edit.Actions;
 using Quaver.Shared.Screens.Edit.Actions.Layers.Rename;
-using Quaver.Shared.Screens.MultiplayerLobby.UI.Dialogs;
 using Wobble.Graphics;
 using Wobble.Graphics.UI.Dialogs;
 using Wobble.Graphics.UI.Form;

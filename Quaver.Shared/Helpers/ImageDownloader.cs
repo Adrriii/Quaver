@@ -14,7 +14,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Quaver.Server.Client;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Online;
-using Quaver.Shared.Screens.Download;
 using Wobble;
 using Wobble.Assets;
 using Wobble.Logging;
@@ -29,8 +28,6 @@ namespace Quaver.Shared.Helpers
         /// <param name="id"></param>
         public static async Task<Texture2D> DownloadMapsetBanner(int id)
         {
-            if (DownloadScreen.MapsetBanners.ContainsKey(id))
-                return DownloadScreen.MapsetBanners[id];
 
             var url = OnlineClient.GetBannerUrl(id);
 
@@ -43,7 +40,6 @@ namespace Quaver.Shared.Helpers
                     using (var mem = new MemoryStream(data))
                     {
                         var img = AssetLoader.LoadTexture2D(mem);
-                        DownloadScreen.MapsetBanners[id] = img;
                         return img;
                     }
                 }

@@ -135,27 +135,6 @@ namespace Quaver.Shared.Screens.Select.UI.Leaderboard
                 Y = 2,
                 X = 2
             };
-
-            Sections[LeaderboardType.Global] = new LeaderboardScoreSectionGlobal(this)
-            {
-                Parent = this,
-                Y = 2,
-                X = 2
-            };
-
-            Sections[LeaderboardType.Mods] = new LeaderboardScoreSectionMods(this)
-            {
-                Parent = this,
-                Y = 2,
-                X = 2
-            };
-
-            Sections[LeaderboardType.Country] = new LeaderboardScoreSectionCountry(this)
-            {
-                Parent = this,
-                Y = 2,
-                X = 2
-            };
         }
 
         /// <summary>
@@ -301,9 +280,6 @@ namespace Quaver.Shared.Screens.Select.UI.Leaderboard
             if (e.Value != ConnectionStatus.Connected || e.OldValue == ConnectionStatus.Connected)
                 return;
 
-            if (ConfigManager.LeaderboardSection.Value != LeaderboardType.Global && ConfigManager.LeaderboardSection.Value != LeaderboardType.Mods)
-                return;
-
             // When the user connects again, load scores.
             LoadNewScores();
         }
@@ -324,9 +300,6 @@ namespace Quaver.Shared.Screens.Select.UI.Leaderboard
 
         private void OnModsChanged(object sender, ModsChangedEventArgs e)
         {
-            if (ConfigManager.LeaderboardSection.Value != LeaderboardType.Mods)
-                return;
-
             LoadNewScores();
         }
     }

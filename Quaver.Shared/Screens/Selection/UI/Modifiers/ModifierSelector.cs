@@ -145,9 +145,6 @@ namespace Quaver.Shared.Screens.Selection.UI.Modifiers
                     case QuaverScreenType.Select:
                         ActiveLeftPanel.Value = SelectContainerPanel.Leaderboard;
                         break;
-                    case QuaverScreenType.Multiplayer:
-                        ActiveLeftPanel.Value = SelectContainerPanel.MatchSettings;
-                        break;
                 }
             })
             {

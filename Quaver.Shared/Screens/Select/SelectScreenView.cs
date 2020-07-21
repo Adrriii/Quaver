@@ -21,7 +21,6 @@ using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Online.Chat;
 using Quaver.Shared.Scheduling;
-using Quaver.Shared.Screens.Download;
 using Quaver.Shared.Screens.Menu;
 using Quaver.Shared.Screens.Menu.UI.Navigation;
 using Quaver.Shared.Screens.Menu.UI.Navigation.User;
@@ -240,9 +239,6 @@ namespace Quaver.Shared.Screens.Select
         private void CreateLeaderboardSelector() => LeaderboardSelector = new LeaderboardSelector(this, new List<LeaderboardSelectorItem>()
         {
             new LeaderboardSelectorItemRankings(LeaderboardType.Local, "Local"),
-            new LeaderboardSelectorItemRankings(LeaderboardType.Global, "Global"),
-            new LeaderboardSelectorItemRankings(LeaderboardType.Mods, "Mods"),
-            new LeaderboardSelectorItemRankings(LeaderboardType.Country, "Country")
         })
         {
             Parent = Container
@@ -330,30 +326,6 @@ namespace Quaver.Shared.Screens.Select
             {
                 new ButtonText(FontsBitmap.GothamRegular, "Back", 14, (sender, args) => screen.ExitToMenu()),
                 new ButtonText(FontsBitmap.GothamRegular, "Options", 14,(sender, args) => DialogManager.Show(new OptionsDialog())),
-                new ButtonText(FontsBitmap.GothamRegular, "Chat", 14, (sender, args) =>
-                {
-                    if (OnlineManager.Status.Value != ConnectionStatus.Connected)
-                    {
-                        NotificationManager.Show(NotificationLevel.Error, "You must be logged in to use the chat!");
-                        return;
-                    }
-                }),
-                new ButtonText(FontsBitmap.GothamRegular, "Download Maps", 14, (sender, args) =>
-                {
-                    if (OnlineManager.Status.Value != ConnectionStatus.Connected)
-                    {
-                        NotificationManager.Show(NotificationLevel.Error, "You must be online to download maps!");
-                        return;
-                    }
-
-                    if (OnlineManager.CurrentGame != null)
-                    {
-                        NotificationManager.Show(NotificationLevel.Error, "You cannot download maps while in multiplayer!");
-                        return;
-                    }
-
-                    screen.Exit(() => new DownloadScreen());
-                }),
                 new ButtonText(FontsBitmap.GothamRegular, "Profile", 14, (sender, args) => BrowserHelper.OpenURL($"https://quavergame.com/profile/{ConfigManager.Username.Value}?mode={(int) ConfigManager.SelectedGameMode.Value}")),
             };
 

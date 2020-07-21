@@ -7,7 +7,7 @@
 
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Steamworks;
+
 
 namespace Quaver.Shared.Helpers
 {
@@ -20,11 +20,6 @@ namespace Quaver.Shared.Helpers
         /// <param name="forceNormalBrowser"></param>
         public static void OpenURL(string url, bool forceNormalBrowser = false)
         {
-            if (!forceNormalBrowser && SteamUtils.IsOverlayEnabled())
-            {
-                SteamFriends.ActivateGameOverlayToWebPage(url);
-                return;
-            }
 
             try
             {

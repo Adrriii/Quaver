@@ -175,7 +175,6 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             CreateRequiredAccuracyAlert();
             CreateTime();
 
-            SteamManager.SteamUserAvatarLoaded += OnSteamAvatarLoaded;
             ModManager.ModsChanged += OnModsChanged;
         }
 
@@ -242,7 +241,6 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             BlankImage?.Dispose();
 
             // ReSharper disable once DelegateSubtraction
-            SteamManager.SteamUserAvatarLoaded -= OnSteamAvatarLoaded;
             ModManager.ModsChanged -= OnModsChanged;
 
             base.Destroy();
@@ -603,37 +601,6 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
         /// </summary>
         private void UpdateAvatar()
         {
-            var steamId = (ulong) Score.Item.SteamId;
-
-            lock (Avatar)
-            lock (Avatar.Image)
-            {
-                if (Score.IsPersonalBest && !Score.Item.IsOnline)
-                {
-                    Avatar.Image = UserInterface.UnknownAvatar;
-                    Avatar.Alpha = 1;
-                    return;
-                }
-
-                if (SteamManager.UserAvatars.ContainsKey(steamId))
-                {
-                    if (Avatar.Image == SteamManager.UserAvatars[steamId])
-                        return;
-
-                    Avatar.Alpha = 0;
-                    Avatar.ClearAnimations();
-                    Avatar.FadeTo(1, Easing.Linear, 400);
-
-                    Avatar.Image = SteamManager.UserAvatars[steamId];
-                    return;
-                }
-
-                Avatar.Image = UserInterface.UnknownAvatar;
-                Avatar.ClearAnimations();
-                Avatar.Alpha = 0;
-            }
-
-            SteamManager.SendAvatarRetrievalRequest(steamId);
         }
 
         /// <summary>

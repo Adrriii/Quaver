@@ -21,7 +21,6 @@ using Quaver.Shared.Graphics.Online.Playercard;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Online.Chat;
-using Quaver.Shared.Screens.Download;
 using Quaver.Shared.Screens.Editor;
 using Quaver.Shared.Screens.Importing;
 using Quaver.Shared.Screens.Main;
@@ -33,7 +32,6 @@ using Quaver.Shared.Screens.Menu.UI.Navigation.User;
 using Quaver.Shared.Screens.Menu.UI.Panels;
 using Quaver.Shared.Screens.Menu.UI.Tips;
 using Quaver.Shared.Screens.Menu.UI.Visualizer;
-using Quaver.Shared.Screens.MultiplayerLobby;
 using Quaver.Shared.Screens.Options;
 using Quaver.Shared.Screens.Select;
 using Quaver.Shared.Screens.Selection;
@@ -290,25 +288,6 @@ namespace Quaver.Shared.Screens.Menu
                     }));
                 }),
                 new ButtonText(FontsBitmap.GothamRegular, "Options", 14, (sender, args) => DialogManager.Show(new OptionsDialog())),
-                new ButtonText(FontsBitmap.GothamRegular, "Chat", 14, (sender, args) =>
-                {
-                    if (OnlineManager.Status.Value != ConnectionStatus.Connected)
-                    {
-                        NotificationManager.Show(NotificationLevel.Error, "You must be logged in to use the chat!");
-                        return;
-                    }
-                }),
-                new ButtonText(FontsBitmap.GothamRegular, "Download Maps", 14, (sender, args) =>
-                {
-                    if (OnlineManager.Status.Value != ConnectionStatus.Connected)
-                    {
-                        NotificationManager.Show(NotificationLevel.Error, "You must be logged in to download maps!");
-                        return;
-                    }
-
-                    var screen = (QuaverScreen) Screen;
-                    screen.Exit(() => new DownloadScreen());
-                }),
             }, new List<ButtonText>()
             {
                 new ButtonText(FontsBitmap.GothamRegular, "Report Bugs", 14, (sender, args) => BrowserHelper.OpenURL("https://github.com/Quaver/Quaver/issues")),
@@ -379,12 +358,6 @@ namespace Quaver.Shared.Screens.Menu
 
             if (MapManager.Mapsets.Count == 0 || MapManager.Selected == null || MapManager.Selected.Value == null)
             {
-                if (OnlineManager.Status.Value == ConnectionStatus.Connected)
-                {
-                    screen?.Exit(() => new DownloadScreen());
-                    return;
-                }
-
                 NotificationManager.Show(NotificationLevel.Error, "You have no maps loaded. Try importing some!");
                 return;
             }
@@ -427,17 +400,9 @@ namespace Quaver.Shared.Screens.Menu
 
             if (MapManager.Mapsets.Count == 0 || MapManager.Selected == null || MapManager.Selected.Value == null)
             {
-                if (OnlineManager.Status.Value == ConnectionStatus.Connected)
-                {
-                    screen?.Exit(() => new DownloadScreen());
-                    return;
-                }
-
                 NotificationManager.Show(NotificationLevel.Error, "You have no maps loaded. Try importing some!");
                 return;
             }
-
-            screen.Exit(() => new MultiplayerLobbyScreen());
         }
 
         /// <summary>

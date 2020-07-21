@@ -4,7 +4,6 @@ using Quaver.Shared.Config;
 using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Skinning;
-using Steamworks;
 using Wobble.Logging;
 
 namespace Quaver.Shared.Online
@@ -15,11 +14,6 @@ namespace Quaver.Shared.Online
         ///     The current workshop skin upload
         /// </summary>
         public static SteamWorkshopSkin Current { get; private set; }
-
-        /// <summary>
-        ///     The handle used to start making calls to upload the skin
-        /// </summary>
-        public UGCUpdateHandle_t Handle { get; set; }
 
         /// <summary>
         ///     The title of the skin
@@ -75,39 +69,6 @@ namespace Quaver.Shared.Online
                 HasUploaded = true;
                 return;
             }
-        }
-
-        /// <summary>
-        /// </summary>
-        public void Upload()
-        {
-            if (File.Exists(WorkshopIdFilePath))
-            {
-                ExistingWorkshopFileId = ulong.Parse(File.ReadAllText(WorkshopIdFilePath));
-
-                var result = new CreateItemResult_t
-                {
-                    m_bUserNeedsToAcceptWorkshopLegalAgreement = false,
-                    m_eResult = EResult.k_EResultOK,
-                    m_nPublishedFileId = new PublishedFileId_t(ExistingWorkshopFileId)
-                };
-
-                SteamManager.OnCreateItemResultCallResponse(result, false);
-                return;
-            }
-
-            var resp = SteamUGC.CreateItem((AppId_t) SteamManager.ApplicationId, EWorkshopFileType.k_EWorkshopFileTypeCommunity);
-            SteamManager.OnCreateItemResponse.Set(resp);
-        }
-
-        /// <summary>
-        ///     Returns the upload progress percentage
-        /// </summary>
-        /// <returns></returns>
-        public int GetUploadProgressPercentage()
-        {
-            SteamUGC.GetItemUpdateProgress(Handle, out var bytesProcessed, out var bytesTotal);
-            return (int) (bytesProcessed / bytesTotal * 100);
         }
     }
 }

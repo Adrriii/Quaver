@@ -5,7 +5,6 @@ using Quaver.Shared.Database.Profiles;
 using Quaver.Shared.Graphics;
 using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Helpers;
-using Quaver.Shared.Screens.MultiplayerLobby.UI.Dialogs;
 using Wobble.Bindables;
 using Wobble.Graphics;
 using Wobble.Graphics.UI.Dialogs;

@@ -17,11 +17,9 @@ using IniFileParser.Model;
 using ManagedBass;
 using Microsoft.Xna.Framework.Input;
 using Quaver.API.Enums;
-using Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Scheduling;
 using Quaver.Shared.Screens.Editor.UI.Graphing;
-using Quaver.Shared.Screens.MultiplayerLobby.UI.Filter;
 using Quaver.Shared.Screens.Select.UI.Leaderboard;
 using Wobble;
 using Wobble.Bindables;
@@ -77,11 +75,6 @@ namespace Quaver.Shared.Config
         /// </summary>
         private static string _songDirectory;
         internal static Bindable<string> SongDirectory { get; private set; }
-
-        /// <summary>
-        ///     The directory of the Steam workshop
-        /// </summary>
-        private static string _steamWorkshopDirectory;
         internal static Bindable<string> SteamWorkshopDirectory { get; private set; }
 
         /// <summary>
@@ -454,31 +447,11 @@ namespace Quaver.Shared.Config
 
         /// <summary>
         /// </summary>
-        internal static Bindable<OnlineUserListFilter> OnlineUserListFilterType { get; private set; }
-
-        /// <summary>
-        /// </summary>
         internal static Bindable<bool> DisplayFriendOnlineNotifications { get; private set; }
 
         /// <summary>
         /// </summary>
         internal static Bindable<bool> DisplaySongRequestNotifications { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        internal static Bindable<MultiplayerLobbyRuleset> MultiplayerLobbyRulesetType { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        internal static Bindable<MultiplayerLobbyGameMode> MultiplayerLobbyGameModeType { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        internal static Bindable<MultiplayerLobbyMapStatus> MultiplayerLobbyMapStatusType { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        internal static Bindable<MultiplayerLobbyRoomVisibility> MultiplayerLobbyVisibilityType { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -801,8 +774,6 @@ namespace Quaver.Shared.Config
             DataDirectory = ReadSpecialConfigType(SpecialConfigType.Directory, @"DataDirectory", _dataDirectory, data);
             SongDirectory = ReadSpecialConfigType(SpecialConfigType.Directory, @"SongDirectory", _songDirectory, data);
 
-            _steamWorkshopDirectory = $"{GameDirectory.Value}/../../workshop/content/{SteamManager.ApplicationId}";
-            SteamWorkshopDirectory = ReadSpecialConfigType(SpecialConfigType.Directory, @"SteamWorkshopDirectory", _steamWorkshopDirectory, data);
             SelectedGameMode = ReadValue(@"SelectedGameMode", GameMode.Keys4, data);
             Username = ReadValue(@"Username", "Player", data);
             VolumeGlobal = ReadInt(@"VolumeGlobal", 50, 0, 100, data);
@@ -938,13 +909,8 @@ namespace Quaver.Shared.Config
             JudgementWindows = ReadValue("JudgementWindows", "", data);
             SelectGroupMapsetsBy = ReadValue(@"SelectGroupMapsetsBy", GroupMapsetsBy.None, data);
             MusicPlayerOrderMapsBy = ReadValue(@"MusicPlayerOrderMapsBy", OrderMapsetsBy.Artist, data);
-            OnlineUserListFilterType = ReadValue(@"OnlineUserListFilterType", OnlineUserListFilter.All, data);
             DisplayFriendOnlineNotifications = ReadValue(@"DisplayFriendOnlineNotifications", true, data);
             DisplaySongRequestNotifications = ReadValue(@"DisplaySongRequestNotifications", true, data);
-            MultiplayerLobbyRulesetType = ReadValue(@"MultiplayerLobbyRulesetType", MultiplayerLobbyRuleset.All, data);
-            MultiplayerLobbyGameModeType = ReadValue(@"MultiplayerLobbyGameModeType", MultiplayerLobbyGameMode.All, data);
-            MultiplayerLobbyMapStatusType = ReadValue(@"MultiplayerLobbyMapStatusType", MultiplayerLobbyMapStatus.All, data);
-            MultiplayerLobbyVisibilityType = ReadValue(@"MultiplayerLobbyVisibilityType", MultiplayerLobbyRoomVisibility.All, data);
             UseSteamWorkshopSkin = ReadValue(@"UseSteamWorkshopSkin", false, data);
             LowerFpsOnWindowInactive = ReadValue(@"LowerFpsOnWindowInactive", true, data);
             DownloadDisplayOwnedMapsets = ReadValue(@"DownloadDisplayOwnedMapsets", true, data);
@@ -1096,13 +1062,7 @@ namespace Quaver.Shared.Config
                     JudgementWindows.ValueChanged += AutoSaveConfiguration;
                     SelectGroupMapsetsBy.ValueChanged += AutoSaveConfiguration;
                     MusicPlayerOrderMapsBy.ValueChanged += AutoSaveConfiguration;
-                    OnlineUserListFilterType.ValueChanged += AutoSaveConfiguration;
                     DisplaySongRequestNotifications.ValueChanged += AutoSaveConfiguration;
-                    MultiplayerLobbyRulesetType.ValueChanged += AutoSaveConfiguration;
-                    MultiplayerLobbyGameModeType.ValueChanged += AutoSaveConfiguration;
-                    MultiplayerLobbyMapStatusType.ValueChanged += AutoSaveConfiguration;
-                    MultiplayerLobbyVisibilityType.ValueChanged += AutoSaveConfiguration;
-                    SteamWorkshopDirectory.ValueChanged += AutoSaveConfiguration;
                     UseSteamWorkshopSkin.ValueChanged += AutoSaveConfiguration;
                     WindowBorderless.ValueChanged += AutoSaveConfiguration;
                     PreferWayland.ValueChanged += AutoSaveConfiguration;
@@ -1327,7 +1287,8 @@ namespace Quaver.Shared.Config
                     Logger.Error("Too many write attempts to the config file have been made.", LogType.Runtime);
             }
 
-            LastWrite = GameBase.Game.TimeRunning;
+            if(GameBase.Game != null)
+                LastWrite = GameBase.Game.TimeRunning;
         }
 
         /// <summary>

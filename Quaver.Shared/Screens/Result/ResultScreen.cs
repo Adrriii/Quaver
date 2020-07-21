@@ -40,8 +40,6 @@ using Quaver.Shared.Screens.Gameplay;
 using Quaver.Shared.Screens.Gameplay.Rulesets.Input;
 using Quaver.Shared.Screens.Gameplay.UI.Scoreboard;
 using Quaver.Shared.Screens.Loading;
-using Quaver.Shared.Screens.Multi;
-using Quaver.Shared.Screens.Multiplayer;
 using Quaver.Shared.Screens.Result.UI;
 using Quaver.Shared.Screens.Select;
 using Quaver.Shared.Screens.Selection;
@@ -413,39 +411,6 @@ namespace Quaver.Shared.Screens.Result
 
             ThreadScheduler.Run(() =>
             {
-                Logger.Important($"Beginning to submit score on map: {Gameplay.MapHash}", LogType.Network);
-
-                var map = Map;
-
-                var submissionMd5 = Gameplay.MapHash;
-
-                if (map.Game != MapGame.Quaver)
-                    submissionMd5 = map.GetAlternativeMd5();
-
-                // For any unsubmitted maps, ask the server if it has the .qua already cached
-                // if it doesn't, then we need to provide it.
-                if (map.RankedStatus == RankedStatus.NotSubmitted && OnlineManager.IsDonator)
-                {
-                    var info = OnlineManager.Client?.RetrieveMapInfo(submissionMd5);
-
-                    // Map is not uploaded, so we have to provide the server with it.
-                    if (info == null)
-                    {
-                        Logger.Important($"Unsubmitted map is not cached on the server. Need to provide!", LogType.Network);
-                        var success = OnlineManager.Client?.UploadUnsubmittedMap(Gameplay.Map, submissionMd5, map.Md5Checksum);
-
-                        // The map upload wasn't successful, so we can assume that our score shouldn't be submitted
-                        if (success != null && !success.Value)
-                        {
-                            Logger.Error($"Unsubmitted map upload was not successful. Skipping score submission", LogType.Network);
-                            return;
-                        }
-                    }
-                }
-
-                OnlineManager.Client?.Submit(new OnlineScore(submissionMd5, Gameplay.ReplayCapturer.Replay,
-                    Gameplay.Ruleset.StandardizedReplayPlayer.ScoreProcessor, ScrollSpeed, ModHelper.GetRateFromMods(ModManager.Mods), TimeHelper.GetUnixTimestampMilliseconds(),
-                    SteamManager.PTicket));
             });
         }
 
@@ -515,20 +480,6 @@ namespace Quaver.Shared.Screens.Result
         {
             if (IsFetchingOnlineReplay)
                 return;
-
-            if (OnlineManager.CurrentGame != null)
-            {
-                var view = View as ResultScreenView;
-
-                if (view?.SelectedMultiplayerUser?.Value != null)
-                {
-                    view.SelectedMultiplayerUser.Value = null;
-                    return;
-                }
-
-                Exit(() => new MultiplayerGameScreen());
-                return;
-            }
 
             Exit(() => new SelectionScreen());
         }

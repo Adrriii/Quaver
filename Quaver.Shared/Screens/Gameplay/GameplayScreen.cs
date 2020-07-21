@@ -43,7 +43,6 @@ using Quaver.Shared.Screens.Gameplay.Rulesets.Keys;
 using Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects;
 using Quaver.Shared.Screens.Gameplay.Rulesets.Keys.Playfield;
 using Quaver.Shared.Screens.Gameplay.UI.Offset;
-using Quaver.Shared.Screens.MultiplayerLobby;
 using Quaver.Shared.Screens.Select;
 using Quaver.Shared.Screens.Selection;
 using Quaver.Shared.Screens.Selection.UI;
@@ -837,17 +836,6 @@ namespace Quaver.Shared.Screens.Gameplay
                     var game = GameBase.Game as QuaverGame;
                     var cursor = game?.GlobalUserInterface.Cursor;
                     cursor.Alpha = 1;
-
-                    if (IsMultiplayerGame)
-                    {
-                        Exit(() =>
-                        {
-                            OnlineManager.LeaveGame();
-                            return new MultiplayerLobbyScreen();
-                        });
-
-                        return;
-                    }
 
                     ForceFail = true;
                     HasQuit = true;

@@ -108,14 +108,11 @@ namespace Quaver.Shared.Screens.Tournament
             {
                 var qua = MapManager.Selected.Value.LoadQua();
 
-                var mods = OnlineManager.GetUserActivatedMods(spectatees[i].Player.OnlineUser.Id, game);
-                qua.ApplyMods(mods);
-
                 MapManager.Selected.Value.Qua = qua;
 
                 if (spectatees[i].Replay == null)
                 {
-                    spectatees[i].Replay = new Replay(qua.Mode, spectatees[i].Player.OnlineUser.Username, mods,
+                    spectatees[i].Replay = new Replay(qua.Mode, spectatees[i].Player.OnlineUser.Username, 0,
                         MapManager.Selected.Value.Md5Checksum);
                 }
 

@@ -139,7 +139,7 @@ namespace Quaver.Shared.Screens.Beta
         /// <summary>
         /// </summary>
         private void CreateBetaText() => DiscordJoinText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.LatoBlack),
-            "This is an early access version of Quaver for Beta testing.".ToUpper(), 20)
+            "This is an offline version of Quaver for solo play.".ToUpper(), 20)
         {
             Parent = TextBackground,
             Alignment = Alignment.TopCenter,
@@ -151,7 +151,7 @@ namespace Quaver.Shared.Screens.Beta
         /// <summary>
         /// </summary>
         private void CreateThanksText() => ThanksText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.LatoBlack),
-            "BE SURE TO REPORT ANY BUGS, AND REQUEST NEW FEATURES ON GITHUB!", 20)
+            "IF THERE ARE BUGS, TOUGH LUCK!", 20)
         {
             Parent = TextBackground,
             Alignment = Alignment.TopCenter,
@@ -163,7 +163,7 @@ namespace Quaver.Shared.Screens.Beta
         /// <summary>
         /// </summary>
         private void CreatePressToSkipText() => PressToSkipText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.LatoBlack),
-            "PRESS ENTER TO SKIP", 20)
+            "PRESS ENTER TO SKIP (you can disable this message in the settings)", 20)
         {
             Parent = Container,
             Alignment = Alignment.BotCenter,

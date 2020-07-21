@@ -118,14 +118,6 @@ namespace Quaver.Shared.Graphics.Menu.Border.Components
         {
             Username.Text = User.OnlineUser.Username;
 
-            var steamId = (ulong) User.OnlineUser.SteamId;
-
-            if (SteamManager.UserAvatars.ContainsKey(steamId))
-                Avatar.Image = SteamManager.UserAvatars[steamId];
-            // Request Steam Avatar
-            else
-                SteamManager.SendAvatarRetrievalRequest(steamId);
-
             Size = new ScalableVector2(Avatar.Width + SpacingX + Username.Width + 16, 51);
         }
 

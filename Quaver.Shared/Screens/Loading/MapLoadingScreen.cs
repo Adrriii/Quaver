@@ -23,8 +23,6 @@ using Quaver.Shared.Modifiers.Mods;
 using Quaver.Shared.Online;
 using Quaver.Shared.Scheduling;
 using Quaver.Shared.Screens.Gameplay;
-using Quaver.Shared.Screens.Multi;
-using Quaver.Shared.Screens.Multiplayer;
 using Quaver.Shared.Screens.Select;
 using Quaver.Shared.Screens.Selection;
 using Wobble;
@@ -117,19 +115,6 @@ namespace Quaver.Shared.Screens.Loading
             // Throw an exception if there is no selected map.
             if (MapManager.Selected.Value == null)
                 throw new Exception("No selected map, we should not be on this screen!");
-
-            // Make sure the absolutely correct map is selected in multiplayer
-            if (OnlineManager.CurrentGame != null)
-            {
-                MultiplayerGameScreen.SelectMultiplayerMap();
-                AddModsFromIdentifiers(OnlineManager.GetSelfActivatedMods());
-
-                if (MapManager.Selected.Value == null)
-                {
-                    Exit(() => new MultiplayerGameScreen());
-                    return;
-                }
-            }
 
             MapManager.Selected.Value.Qua = MapManager.Selected.Value.LoadQua();
 

@@ -33,7 +33,6 @@ using Quaver.Shared.Screens.Importing;
 using Quaver.Shared.Screens.Loading;
 using Quaver.Shared.Screens.Main;
 using Quaver.Shared.Screens.Menu;
-using Quaver.Shared.Screens.Multiplayer;
 using Quaver.Shared.Screens.Result;
 using Quaver.Shared.Screens.Select.UI.Leaderboard;
 using Quaver.Shared.Screens.Select.UI.Mapsets;
@@ -80,15 +79,9 @@ namespace Quaver.Shared.Screens.Select
         public bool IsExitingToGameplay { get; private set; }
 
         /// <summary>
-        ///     If we're currently selecting in a multiplayer game
         /// </summary>
-        private MultiplayerScreen MultiplayerScreen { get; }
-
-        /// <summary>
-        /// </summary>
-        public SelectScreen(MultiplayerScreen screen = null)
+        public SelectScreen()
         {
-            MultiplayerScreen = screen;
 
             // Go to the import screen if we've imported a map not on the select screen
             if (MapsetImporter.Queue.Count > 0 || QuaverSettingsDatabaseCache.OutdatedMaps.Count != 0 || MapDatabaseCache.MapsToUpdate.Count != 0)
@@ -468,67 +461,6 @@ namespace Quaver.Shared.Screens.Select
         {
             IsExitingToGameplay = true;
 
-            if (OnlineManager.IsSpectatingSomeone)
-                OnlineManager.Client?.StopSpectating();
-
-            if (OnlineManager.CurrentGame != null)
-            {
-                var map = MapManager.Selected.Value;
-
-                var diff = map.DifficultyFromMods(ModManager.Mods);
-
-                // Prevent host from picking a map not within difficulty range
-                if (diff < OnlineManager.CurrentGame.MinimumDifficultyRating ||
-                    diff > OnlineManager.CurrentGame.MaximumDifficultyRating)
-                {
-                    NotificationManager.Show(NotificationLevel.Error, $"Difficulty rating must be between " +
-                           $"{OnlineManager.CurrentGame.MinimumDifficultyRating} and {OnlineManager.CurrentGame.MaximumDifficultyRating} " +
-                           $"for this multiplayer match!");
-
-                    return;
-                }
-
-                // Pevent host from picking a map not in max song length range
-                if (map.SongLength * ModHelper.GetRateFromMods(ModManager.Mods) / 1000 >
-                    OnlineManager.CurrentGame.MaximumSongLength)
-                {
-                    NotificationManager.Show(NotificationLevel.Error, $"The maximum length allowed for this multiplayer match is: " +
-                                                                      $"{OnlineManager.CurrentGame.MaximumSongLength} seconds");
-                    return;
-                }
-
-                // Prevent disallowed game modes from being selected
-                if (!OnlineManager.CurrentGame.AllowedGameModes.Contains((byte) map.Mode))
-                {
-                    NotificationManager.Show(NotificationLevel.Error, "You cannot pick maps of this game mode in this multiplayer match!");
-                    return;
-                }
-
-                // Prevent maps not in range of the minimum and maximum LN%
-                if (map.LNPercentage < OnlineManager.CurrentGame.MinimumLongNotePercentage
-                    || map.LNPercentage > OnlineManager.CurrentGame.MaximumLongNotePercentage)
-                {
-                    NotificationManager.Show(NotificationLevel.Error, $"You cannot select this map. The long note percentage must be between " +
-                                                $"{OnlineManager.CurrentGame.MinimumLongNotePercentage}%-{OnlineManager.CurrentGame.MaximumLongNotePercentage}% " +
-                                                                      $"for this multiplayer match.");
-                    return;
-                }
-
-                // Start the fade out early to make it look like the screen is loading
-                Transitioner.FadeIn();
-
-                ThreadScheduler.Run(() =>
-                {
-                    OnlineManager.Client.ChangeMultiplayerGameMap(map.Md5Checksum, map.MapId, map.MapSetId, map.ToString(), (byte) map.Mode,
-                        map.DifficultyFromMods(ModManager.Mods), map.GetDifficultyRatings(), map.GetJudgementCount(), MapManager.Selected.Value.GetAlternativeMd5());
-
-                    OnlineManager.Client.SetGameCurrentlySelectingMap(false);
-                    RemoveTopScreen(MultiplayerScreen);
-                });
-
-                return;
-            }
-
             Exit(() =>
             {
                 var game = GameBase.Game as QuaverGame;
@@ -550,15 +482,6 @@ namespace Quaver.Shared.Screens.Select
         /// </summary>
         public void ExitToMenu()
         {
-            if (MultiplayerScreen != null)
-            {
-                var view = (MultiplayerScreenView) MultiplayerScreen.View;
-                view.Map.UpdateContent();
-                OnlineManager.Client.SetGameCurrentlySelectingMap(false);
-
-                RemoveTopScreen(MultiplayerScreen);
-                return;
-            }
 
             Exit(() =>
             {
@@ -577,11 +500,6 @@ namespace Quaver.Shared.Screens.Select
         /// </summary>
         public void ExitToEditor()
         {
-            if (MultiplayerScreen != null)
-            {
-                NotificationManager.Show(NotificationLevel.Error, "You cannot use the editor while in a multiplayer game!");
-                return;
-            }
 
             if (!AudioEngine.Track.IsDisposed)
                 AudioEngine.Track?.Pause();
@@ -612,7 +530,7 @@ namespace Quaver.Shared.Screens.Select
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAutoLoadOsuBeatmapsChanged(object sender, BindableValueChangedEventArgs<bool> e) => Exit(
-            () => new ImportingScreen(MultiplayerScreen), 0, QuaverScreenChangeType.AddToStack);
+            () => new ImportingScreen(), 0, QuaverScreenChangeType.AddToStack);
 
         /// <summary>
         ///     Called when the user changes the option for displaying failed scores.

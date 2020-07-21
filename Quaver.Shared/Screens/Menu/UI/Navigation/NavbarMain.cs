@@ -12,7 +12,6 @@ using Quaver.Server.Client;
 using Quaver.Server.Client.Handlers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Online.Chat;
-using Quaver.Shared.Screens.Download;
 using Wobble;
 using Wobble.Bindables;
 using Wobble.Logging;
@@ -42,31 +41,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation
         public NavbarMain(QuaverScreen screen, List<NavbarItem> leftAlignedItems, List<NavbarItem> rightAlignedItems, bool isUpsideDown = false)
             : base(leftAlignedItems, rightAlignedItems, isUpsideDown)
         {
-            // Add community chat button
-            if (OnlineManager.CurrentGame == null)
-            {
-                DownloadMapsButton = new NavbarItem("Download", screen.Type == QuaverScreenType.Download) { DestroyIfParentIsNull = false };
-                DownloadMapsButton.Clicked += (o, e) => OnDownloadMapsButtonClicked();
-            }
-
-            // Add community chat button
-            OpenChatButton = new NavbarItem("Community Chat") { DestroyIfParentIsNull = false };
-
-            // Make sure all online buttons are there if applicable
-            if (OnlineManager.Status.Value == ConnectionStatus.Connected ||
-                OnlineManager.Status.Value == ConnectionStatus.Reconnecting)
-            {
-                if (OnlineManager.CurrentGame == null)
-                    LeftAlignedItems.Add(DownloadMapsButton);
-
-                LeftAlignedItems.Add(OpenChatButton);
-                AlignLeftItems();
-            }
-
-            OnlineManager.Status.ValueChanged += OnOnlineStatusChanged;
-
-            if (OnlineManager.Client != null)
-                OnlineManager.Client.OnLoginSuccess += OnLoginSuccess;
         }
 
         /// <inheritdoc />
@@ -149,13 +123,6 @@ namespace Quaver.Shared.Screens.Menu.UI.Navigation
         /// </summary>
         private void OnDownloadMapsButtonClicked()
         {
-            var game = GameBase.Game as QuaverGame;
-
-            game?.CurrentScreen?.Exit(() =>
-            {
-                AudioEngine.Track?.Fade(10, 300);
-                return new DownloadScreen();
-            });
         }
     }
 }

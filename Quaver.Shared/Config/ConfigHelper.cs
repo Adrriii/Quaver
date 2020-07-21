@@ -213,6 +213,7 @@ namespace Quaver.Shared.Config
         {
             try
             {
+                if (newVal == null) return defaultColor;
                 var colorSplit = newVal.Split(',');
                 return new Color(byte.Parse(colorSplit[0]), byte.Parse(colorSplit[1]), byte.Parse(colorSplit[2]));
             }

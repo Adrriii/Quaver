@@ -8,7 +8,6 @@ using Quaver.Shared.Graphics.Menu.Border.Components;
 using Quaver.Shared.Graphics.Menu.Border.Components.Buttons;
 using Quaver.Shared.Graphics.Menu.Border.Components.Users;
 using Quaver.Shared.Graphics.Overlays.Hub;
-using Quaver.Shared.Screens.Download;
 using Quaver.Shared.Screens.Main;
 using Quaver.Shared.Screens.Menu.UI.Jukebox;
 using Wobble;
@@ -38,10 +37,8 @@ namespace Quaver.Shared.Graphics.Menu.Border
                         var game = (QuaverGame) GameBase.Game;
                         game.CurrentScreen.Exit(() => new MainMenuScreen());
                     }),
-                new IconTextButtonDownloadMaps(),
                 new IconTextButtonMusicPlayer(),
                 new IconTextButtonTheater(),
-                new IconTextButtonSkins(),
                 new IconTextButtonDonate()
             },
             new List<Drawable>
