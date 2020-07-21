@@ -1,14 +1,4 @@
-# Quaver 
-
-[![Build Status](https://travis-ci.com/Quaver/Quaver.svg?branch=develop)](https://travis-ci.com/Quaver/Quaver) [![CodeFactor](https://www.codefactor.io/repository/github/swan/quaver/badge)](https://www.codefactor.io/repository/github/swan/quaver) [![license](https://img.shields.io/badge/license-Mozilla%20Public%20License%202.0-blue)](https://github.com/Quaver/Quaver/blob/develop/LICENSE)
-
-<p align="center"> 
-  <img src="https://i.imgur.com/AohWq5l.png">
-</p>
-
-| [![steam](https://i.imgur.com/rR4p9mW.png)](https://store.steampowered.com/app/980610/Quaver/) | [![twitter](https://i.imgur.com/Kd0SXlh.png)](https://twitter.com/QuaverGame) | [![discord](https://i.imgur.com/YrBmbEf.png)](https://discord.gg/nJa8VFr) | [![blog](https://i.imgur.com/o0fq6MA.png)](https://blog.quavergame.com) | [![website](https://i.imgur.com/svZCnuI.png)](https://quavergame.com) | 
-| --- | --- | --- | --- | --- |
-| **Steam Store Page** | **Follow Us On Twitter** | **Join The Discord** | **Read The Developer Blog** | **Visit The Website** |
+# Quaver Offline
 
 ## About 
 
@@ -16,21 +6,17 @@
 
 It is also being officially released on [Steam](https://store.steampowered.com/app/980610/Quaver/) for Windows, Mac, and Linux—making it one of the most accessible community-driven rhythm games to date.
 
+This is the Offline version, which includes only limited features but doesn't rely on steam running in the background !
+
 ## Status
 
-This project is currently under heavy development and is in an alpha state, however it is extremely playable as a standalone game. Quaver still has a ton of work ahead of it and will continue to get better as time goes on with new features and bug fixes being added each day.
-
-Occasionally we open registrations where you can join the Steam alpha and get exclusive access to all the features Quaver has to offer including online rankings, multiplayer, in-game chat, map downloading/uploading, and so much more. Registrations are **currently closed,** however you can still enjoy a limited version of Quaver by compiling the `develop` branch or by downloading one of the [GitHub Releases](https://github.com/Quaver/Quaver/releases).
+This project will likely not be heavily maintained, you might want to use the official client for that. This project is here for the sake of existing.
 
 ## Features
 
-Although there are many games like this, **Quaver** offers many unique features and expands on the ideas of its predecessors that make it much different. It is also heavily inspired by a variety of our favorite rhythm games.
+Those are the features still present in this version :
 
 * **Two Game Modes** - Play the game with 4 keys or challenge yourself with 7. Each game mode has separate global and country leaderboards to compete on.
-
-* **Global & Country Leaderboards** - Compete with your country and the world for the highest scores and aim to be #1.
-
-* **Ranked & Casual Multiplayer** - Challenge up to 16 players in casual or competitive-oriented multiplayer battles. Multiplayer includes three game modes including Free-For-All, Teams, and Battle Royale.
 
 * **Map Editor** - Create your own maps to any of your favorite songs. Upload and share them with the world, and submit them for official ranking.
 
@@ -38,9 +24,7 @@ Although there are many games like this, **Quaver** offers many unique features 
 
 * **Replays** - Go back in time by watching your previous scores. Watch replays from other players around the world, or export your own and share them with your rivals.
 
-* **Over 10+ Game Modifiers** - Switch up the way you play by activating in-game modifiers. Customize the speed of the song, get rid of all the long notes, or even randomize the entire map!
-
-* **Steam Achievements** - Become a master of Quaver by completing challenges and earning achievements!
+* **Over 10+ Game Modifiers** - Switch up the way you play by activating in-game modifiers. Customize the speed of the song, get rid of all the long notes, or even randomize the entire map
 
 * **Play Maps From Other Games** - Coming from a different game and miss all of your favorite maps? Quaver supports .osz, .sm, and .mc/.mcz files out of the box - with support for more games to be added in the future!
 
@@ -49,8 +33,7 @@ Although there are many games like this, **Quaver** offers many unique features 
 Getting started with **Quaver** development is extremely easy.
 
 * Install the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
-* Clone the Quaver repository and its submodules `git clone --recurse-submodules https://github.com/Quaver/Quaver`
-* **Have Steam open and running**
+* Clone the Quaver repository and its submodules `git clone -branch offline --recurse-submodules https://github.com/Adrriii/Quaver`
 * Build & run Quaver with `dotnet run --project Quaver`
 
 ## Contributing 
