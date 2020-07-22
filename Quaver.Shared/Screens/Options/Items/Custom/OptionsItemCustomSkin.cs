@@ -94,27 +94,6 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             var dirs = skinDirectories.Select(dir => new DirectoryInfo(dir).Name);
             skins.AddRange(dirs.ToList());
 
-            var workshopDirectories = Directory.GetDirectories(ConfigManager.SteamWorkshopDirectory.Value);
-
-            var workshopList = new List<string>();
-
-            foreach (var directory in workshopDirectories)
-            {
-                if (File.Exists($"{directory}/skin.ini"))
-                {
-                    var data = new IniFileParser.IniFileParser(new ConcatenateDuplicatedKeysIniDataParser())
-                        .ReadFile($"{directory}/skin.ini")["General"];
-
-                    if (data["Name"] != null)
-                        workshopList.Add($"{data["Name"]} <{new DirectoryInfo(directory).Name}>");
-                }
-                else
-                    workshopList.Add($"({new DirectoryInfo(directory).Name})");
-            }
-
-            workshopList.Sort();
-            skins.AddRange(workshopList);
-
             skins.Sort();
             options.AddRange(skins);
             return options;
