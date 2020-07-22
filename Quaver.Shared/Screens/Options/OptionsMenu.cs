@@ -211,7 +211,6 @@ namespace Quaver.Shared.Screens.Options
                     }),
                     new OptionsSubcategory("User Interface", new List<OptionsItem>()
                     {
-                        new OptionsItemCheckbox(containerRect, "Show Spectators", ConfigManager.ShowSpectators),
                         new OptionsItemCheckbox(containerRect, "Display Timing Lines", ConfigManager.DisplayTimingLines),
                         new OptionsItemCheckbox(containerRect, "Display Judgement Counter", ConfigManager.DisplayJudgementCounter),
                         new OptionsItemCheckbox(containerRect, "Display Ranked Accuracy With Custom Judgements", ConfigManager.DisplayRankedAccuracy),
@@ -222,7 +221,6 @@ namespace Quaver.Shared.Screens.Options
                     new OptionsSubcategory("Scoreboard", new List<OptionsItem>()
                     {
                         new OptionsItemCheckbox(containerRect, "Display Scoreboard", ConfigManager.ScoreboardVisible),
-                        new OptionsItemCheckbox(containerRect, "[Donator] Enable Real-time Top 5 Online Scoreboard", ConfigManager.EnableRealtimeOnlineScoreboard),
                         new OptionsItemCheckbox(containerRect, "Display Unbeatable Scores", ConfigManager.DisplayUnbeatableScoresDuringGameplay)
                     }),
                     new OptionsSubcategory("Progress Bar", new List<OptionsItem>()
@@ -258,7 +256,6 @@ namespace Quaver.Shared.Screens.Options
                     new OptionsSubcategory("Sharing", new List<OptionsItem>()
                     {
                         new OptionsItemExportSkin(containerRect, "Export Skin"),
-                        new OptionsItemUploadSkinToWorkshop(containerRect, "Upload Skin To Steam Workshop")
                     }),
                     new OptionsSubcategory("Tournament", new List<OptionsItem>()
                     {
