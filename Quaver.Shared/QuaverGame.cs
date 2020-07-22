@@ -386,6 +386,8 @@ namespace Quaver.Shared
             LimitFpsOnInactiveWindow();
             UpdateFpsCounterPosition();
 
+            Fps.Update(gameTime);
+
             Window.AllowUserResizing = QuaverWindowManager.CanChangeResolutionOnScene;
         }
 
@@ -395,9 +397,6 @@ namespace Quaver.Shared
         /// </summary>
         protected override void Draw(GameTime gameTime)
         {
-            if (!IsReadyToUpdate)
-                return;
-
             base.Draw(gameTime);
 
             // Draw dialogs
@@ -410,6 +409,8 @@ namespace Quaver.Shared
             Transitioner.Draw(gameTime);
 
             ClearAlphaChannel(gameTime);
+
+            Fps.Draw(gameTime);
         }
 
         /// <summary>
@@ -545,27 +546,32 @@ namespace Quaver.Shared
                     Graphics.SynchronizeWithVerticalRetrace = false;
                     IsFixedTimeStep = false;
                     WaylandVsync = false;
+                    TargetDrawTime = 0;
                     break;
                 case FpsLimitType.Limited:
                     Graphics.SynchronizeWithVerticalRetrace = false;
-                    IsFixedTimeStep = true;
+                    IsFixedTimeStep = false;
                     TargetElapsedTime = TimeSpan.FromSeconds(1d / 240d);
+                    TargetDrawTime = (int)TargetElapsedTime.TotalMilliseconds;
                     WaylandVsync = false;
                     break;
                 case FpsLimitType.Vsync:
                     Graphics.SynchronizeWithVerticalRetrace = true;
+                    TargetDrawTime = 0;
                     IsFixedTimeStep = false;
                     WaylandVsync = false;
                     break;
                 case FpsLimitType.WaylandVsync:
                     Graphics.SynchronizeWithVerticalRetrace = false;
+                    TargetDrawTime = 0;
                     IsFixedTimeStep = false;
                     WaylandVsync = true;
                     break;
                 case FpsLimitType.Custom:
                     Graphics.SynchronizeWithVerticalRetrace = false;
                     TargetElapsedTime = TimeSpan.FromSeconds(1d / ConfigManager.CustomFpsLimit.Value);
-                    IsFixedTimeStep = true;
+                    TargetDrawTime = (int)TargetElapsedTime.TotalMilliseconds;
+                    IsFixedTimeStep = false;
                     WaylandVsync = false;
                     break;
                 default:
