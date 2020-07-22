@@ -33,6 +33,7 @@ namespace Quaver.Shared.Screens.Selection.UI.FilterPanel.Dropdowns
         private static List<string> GetDropdownItems() => new List<string>
         {
             "All",
+            "1 Key",
             "4 Keys",
             "7 Keys",
         };

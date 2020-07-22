@@ -26,6 +26,7 @@ namespace Quaver.Shared.Helpers
 
             switch (map.Mode)
             {
+                case GameMode.Keys1:
                 case GameMode.Keys4:
                 case GameMode.Keys7:
                     replay = Replay.GeneratePerfectReplayKeys(replay, map);

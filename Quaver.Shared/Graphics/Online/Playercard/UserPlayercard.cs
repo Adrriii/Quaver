@@ -179,6 +179,7 @@ namespace Quaver.Shared.Graphics.Online.Playercard
 
                 switch (GameMode)
                 {
+                    case GameMode.Keys1:
                     case GameMode.Keys4:
                         TextGlobalRank.Icon.Image = FontAwesome.Get(FontAwesomeIcon.fa_comments);
                         break;

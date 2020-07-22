@@ -528,6 +528,9 @@ namespace Quaver.Shared.Screens.Selection
 
             switch (MapManager.Selected.Value.Mode)
             {
+                case GameMode.Keys1:
+                    scrollSpeed = ConfigManager.ScrollSpeed1K;
+                    break;
                 case GameMode.Keys4:
                     scrollSpeed = ConfigManager.ScrollSpeed4K;
                     break;

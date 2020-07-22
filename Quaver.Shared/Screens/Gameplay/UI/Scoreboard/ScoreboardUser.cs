@@ -173,6 +173,7 @@ namespace Quaver.Shared.Screens.Gameplay.UI.Scoreboard
 
             switch (Screen.Map.Mode)
             {
+                case GameMode.Keys1:
                 case GameMode.Keys4:
                 case GameMode.Keys7:
                     if (screen.IsMultiplayerGame && Type == ScoreboardUserType.Other)

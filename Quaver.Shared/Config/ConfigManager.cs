@@ -172,6 +172,11 @@ namespace Quaver.Shared.Config
         internal static Bindable<bool> DisplaySongTimeProgress { get; private set; }
 
         /// <summary>
+        ///     The scroll speed for mania 1k
+        /// </summary>
+        internal static BindableInt ScrollSpeed1K { get; private set; }
+
+        /// <summary>
         ///     The scroll speed for mania 4k
         /// </summary>
         internal static BindableInt ScrollSpeed4K { get; private set; }
@@ -180,6 +185,11 @@ namespace Quaver.Shared.Config
         ///     The scroll speed for mania 7k
         /// </summary>
         internal static BindableInt ScrollSpeed7K { get; private set; }
+
+        /// <summary>
+        ///     Direction in which hit objects will be moving for 4K gamemode
+        /// </summary>
+        internal static Bindable<ScrollDirection> ScrollDirection1K { get; private set; }
 
         /// <summary>
         ///     Direction in which hit objects will be moving for 4K gamemode
@@ -565,6 +575,11 @@ namespace Quaver.Shared.Config
         internal static Bindable<Keys> KeyNavigateSelect { get; private set; }
 
         /// <summary>
+        ///     Keybindings for 1K
+        /// </summary>
+        internal static Bindable<Keys> KeyMania1K1 { get; private set; }
+
+        /// <summary>
         ///     Keybindings for 4K
         /// </summary>
         internal static Bindable<Keys> KeyMania4K1 { get; private set; }
@@ -792,8 +807,10 @@ namespace Quaver.Shared.Config
             FpsLimiterType = ReadValue(@"FpsLimiterType", FpsLimitType.Unlimited, data);
             CustomFpsLimit = ReadInt(@"CustomFpsLimit", 240, 60, int.MaxValue, data);
             SmoothAudioTimingGameplay = ReadValue(@"SmoothAudioTimingGameplay", false, data);
+            ScrollSpeed1K = ReadInt(@"ScrollSpeed1K", 150, 50, 1000, data);
             ScrollSpeed4K = ReadInt(@"ScrollSpeed4K", 150, 50, 1000, data);
             ScrollSpeed7K = ReadInt(@"ScrollSpeed7K", 150, 50, 1000, data);
+            ScrollDirection1K = ReadValue(@"ScrollDirection1K", ScrollDirection.Down, data);
             ScrollDirection4K = ReadValue(@"ScrollDirection4K", ScrollDirection.Down, data);
             ScrollDirection7K = ReadValue(@"ScrollDirection7K", ScrollDirection.Down, data);
             GlobalAudioOffset = ReadInt(@"GlobalAudioOffset", 0, -300, 300, data);
@@ -818,6 +835,7 @@ namespace Quaver.Shared.Config
             KeyNavigateDown = ReadValue(@"KeyNavigateDown", Keys.Down, data);
             KeyNavigateBack = ReadValue(@"KeyNavigateBack", Keys.Escape, data);
             KeyNavigateSelect = ReadValue(@"KeyNavigateSelect", Keys.Enter, data);
+            KeyMania1K1 = ReadValue(@"KeyMania1K1", Keys.Space, data);
             KeyMania4K1 = ReadValue(@"KeyMania4K1", Keys.A, data);
             KeyMania4K2 = ReadValue(@"KeyMania4K2", Keys.S, data);
             KeyMania4K3 = ReadValue(@"KeyMania4K3", Keys.K, data);
@@ -969,8 +987,10 @@ namespace Quaver.Shared.Config
                     CustomFpsLimit.ValueChanged += AutoSaveConfiguration;
                     SmoothAudioTimingGameplay.ValueChanged += AutoSaveConfiguration;
                     DisplaySongTimeProgress.ValueChanged += AutoSaveConfiguration;
+                    ScrollSpeed1K.ValueChanged += AutoSaveConfiguration;
                     ScrollSpeed4K.ValueChanged += AutoSaveConfiguration;
                     ScrollSpeed7K.ValueChanged += AutoSaveConfiguration;
+                    ScrollDirection1K.ValueChanged += AutoSaveConfiguration;
                     ScrollDirection4K.ValueChanged += AutoSaveConfiguration;
                     ScrollDirection7K.ValueChanged += AutoSaveConfiguration;
                     GlobalAudioOffset.ValueChanged += AutoSaveConfiguration;
@@ -990,6 +1010,7 @@ namespace Quaver.Shared.Config
                     KeyNavigateDown.ValueChanged += AutoSaveConfiguration;
                     KeyNavigateBack.ValueChanged += AutoSaveConfiguration;
                     KeyNavigateSelect.ValueChanged += AutoSaveConfiguration;
+                    KeyMania1K1.ValueChanged += AutoSaveConfiguration;
                     KeyMania4K1.ValueChanged += AutoSaveConfiguration;
                     KeyMania4K2.ValueChanged += AutoSaveConfiguration;
                     KeyMania4K3.ValueChanged += AutoSaveConfiguration;

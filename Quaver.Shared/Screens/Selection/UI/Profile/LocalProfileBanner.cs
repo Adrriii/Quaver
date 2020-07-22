@@ -198,11 +198,14 @@ namespace Quaver.Shared.Screens.Selection.UI.Profile
 
                 switch (ActiveMode)
                 {
+                    case GameMode.Keys1:
+                        mode = GameMode.Keys4;
+                        break;
                     case GameMode.Keys4:
                         mode = GameMode.Keys7;
                         break;
                     case GameMode.Keys7:
-                        mode = GameMode.Keys4;
+                        mode = GameMode.Keys1;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -273,6 +276,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Profile
         {
             switch (mode)
             {
+                case GameMode.Keys1:
+                    return UserInterface.Mode1KOn;
                 case GameMode.Keys4:
                     return UserInterface.Mode4KOn;
                 case GameMode.Keys7:

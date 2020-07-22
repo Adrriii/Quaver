@@ -674,7 +674,7 @@ namespace Quaver.Shared.Screens.Results
             var profileName = UserProfileDatabaseCache.Selected.Value.Username;
             var username = !string.IsNullOrEmpty(profileName) ? profileName : ConfigManager.Username.Value;
 
-            var scrollSpeed = Map.Mode == GameMode.Keys4 ? ConfigManager.ScrollSpeed4K.Value : ConfigManager.ScrollSpeed7K.Value;
+            var scrollSpeed = Map.Mode == GameMode.Keys4 ? ConfigManager.ScrollSpeed4K.Value : Map.Mode == GameMode.Keys1 ? ConfigManager.ScrollSpeed1K.Value : ConfigManager.ScrollSpeed7K.Value;
             var rankedAccuracy = screen.Ruleset.StandardizedReplayPlayer.ScoreProcessor.Accuracy;
 
             var score = Score.FromScoreProcessor(processor, screen.MapHash, username, scrollSpeed,
@@ -795,7 +795,7 @@ namespace Quaver.Shared.Screens.Results
                 Logger.Important($"Original Acc: {originalProcessor.Accuracy}% | Standard* Acc: {processor.Accuracy}%", LogType.Runtime);
             }
 
-            var scrollSpeed = Map.Mode == GameMode.Keys4 ? ConfigManager.ScrollSpeed4K.Value : ConfigManager.ScrollSpeed7K.Value;
+            var scrollSpeed = Map.Mode == GameMode.Keys4 ? ConfigManager.ScrollSpeed4K.Value : Map.Mode == GameMode.Keys1 ? ConfigManager.ScrollSpeed1K.Value : ConfigManager.ScrollSpeed7K.Value;
 
             return true;
         }

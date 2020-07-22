@@ -51,7 +51,22 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
                 var speed = ConfigManager.ScrollSpeed4K;
 
                 if (MapManager.Selected.Value.Qua != null)
-                    speed = MapManager.Selected.Value.Qua.Mode == GameMode.Keys4 ? ConfigManager.ScrollSpeed4K : ConfigManager.ScrollSpeed7K;
+                {
+                    switch (MapManager.Selected.Value.Qua.Mode)
+                    {
+                        case GameMode.Keys1:
+                            speed = ConfigManager.ScrollSpeed1K;
+                            break;
+                        case GameMode.Keys4:
+                            speed = ConfigManager.ScrollSpeed4K;
+                            break;
+                        case GameMode.Keys7:
+                            speed = ConfigManager.ScrollSpeed7K;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
 
                 var scalingFactor = QuaverGame.SkinScalingFactor;
 
@@ -336,6 +351,7 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
             InitializeObjectPool();
 
             AudioEngine.Track.RateChanged += OnRateChanged;
+            ConfigManager.ScrollSpeed1K.ValueChanged += On1KScrollSpeedChanged;
             ConfigManager.ScrollSpeed4K.ValueChanged += On4KScrollSpeedChanged;
             ConfigManager.ScrollSpeed7K.ValueChanged += On7KScrollSpeedChanged;
         }
@@ -345,6 +361,7 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
             AudioEngine.Track.RateChanged -= OnRateChanged;
 
             // ReSharper disable twice DelegateSubtraction
+            ConfigManager.ScrollSpeed1K.ValueChanged -= On1KScrollSpeedChanged;
             ConfigManager.ScrollSpeed4K.ValueChanged -= On4KScrollSpeedChanged;
             ConfigManager.ScrollSpeed7K.ValueChanged -= On7KScrollSpeedChanged;
 
@@ -952,5 +969,7 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
         private void On7KScrollSpeedChanged(object sender, BindableValueChangedEventArgs<int> e) => ForceUpdateLNSize();
 
         private void On4KScrollSpeedChanged(object sender, BindableValueChangedEventArgs<int> e) => ForceUpdateLNSize();
+
+        private void On1KScrollSpeedChanged(object sender, BindableValueChangedEventArgs<int> e) => ForceUpdateLNSize();
     }
 }

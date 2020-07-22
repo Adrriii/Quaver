@@ -51,6 +51,7 @@ namespace Quaver.Shared.Screens.Editor.UI.Dialogs.Metadata
         /// <returns></returns>
         private static List<string> GetGameModesList() => new List<string>()
         {
+            "1 Key",
             "4 Keys",
             "7 Keys"
         };

@@ -15,6 +15,9 @@ namespace Quaver.Shared.Online.API.User
     // ReSharper disable once InconsistentNaming
     public class APIResponseUsersFullUser
     {
+        [JsonProperty("keys1")]
+        public APIResponseUsersFullMode Keys1 { get; set; }
+
         [JsonProperty("keys4")]
         public APIResponseUsersFullMode Keys4 { get; set; }
 

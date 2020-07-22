@@ -253,6 +253,16 @@ namespace Quaver.Shared.Database.Maps
             {
                 case SelectFilterGameMode.All:
                     break;
+                // Remove any maps that aren't 1K
+                case SelectFilterGameMode.Keys1:
+                    mapsets.ForEach(x =>
+                    {
+                        x.Maps.RemoveAll(y => y.Mode != GameMode.Keys1);
+
+                        if (x.Maps.Count == 0)
+                            mapsetsToRemove.Add(x);
+                    });
+                    break;
                 // Remove any maps that aren't 7K
                 case SelectFilterGameMode.Keys4:
                     mapsets.ForEach(x =>
@@ -618,13 +628,22 @@ namespace Quaver.Shared.Database.Maps
                             case SearchFilterOption.Keys:
                                 switch (map.Mode)
                                 {
+                                    case GameMode.Keys1:
+                                        if (!float.TryParse(searchQuery.Value, out var val1k))
+                                            exitLoop = true;
+
+                                        var keyCount1k = 1;
+
+                                        if (!CompareValues(keyCount1k, val1k, searchQuery.Operator))
+                                            exitLoop = true;
+                                        break;
                                     case GameMode.Keys4:
                                         if (!float.TryParse(searchQuery.Value, out var val4k))
                                             exitLoop = true;
 
-                                        var keyCount = map.HasScratchKey ? 5 : 4;
+                                        var keyCount4k = map.HasScratchKey ? 5 : 4;
 
-                                        if (!CompareValues(keyCount, val4k, searchQuery.Operator))
+                                        if (!CompareValues(keyCount4k, val4k, searchQuery.Operator))
                                             exitLoop = true;
                                         break;
                                     case GameMode.Keys7:

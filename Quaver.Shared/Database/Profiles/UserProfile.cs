@@ -56,6 +56,9 @@ namespace Quaver.Shared.Database.Profiles
 
                     switch (mode)
                     {
+                        case GameMode.Keys1:
+                            modeStats = stats.User.Keys1;
+                            break;
                         case GameMode.Keys4:
                             modeStats = stats.User.Keys4;
                             break;

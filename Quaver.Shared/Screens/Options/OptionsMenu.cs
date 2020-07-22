@@ -184,8 +184,10 @@ namespace Quaver.Shared.Screens.Options
                 {
                     new OptionsSubcategory("Scrolling", new List<OptionsItem>()
                     {
+                        new OptionsItemScrollDirection(containerRect, "1K Scroll Direction", ConfigManager.ScrollDirection1K),
                         new OptionsItemScrollDirection(containerRect, "4K Scroll Direction", ConfigManager.ScrollDirection4K),
                         new OptionsItemScrollDirection(containerRect, "7K Scroll Direction", ConfigManager.ScrollDirection7K),
+                        new OptionsSlider(containerRect, "1K Scroll Speed", ConfigManager.ScrollSpeed1K, i => $"{i / 10f:0.0}"),
                         new OptionsSlider(containerRect, "4K Scroll Speed", ConfigManager.ScrollSpeed4K, i => $"{i / 10f:0.0}"),
                         new OptionsSlider(containerRect, "7K Scroll Speed", ConfigManager.ScrollSpeed7K, i => $"{i / 10f:0.0}"),
                     }),
@@ -274,6 +276,10 @@ namespace Quaver.Shared.Screens.Options
                 {
                     new OptionsSubcategory("Gameplay", new List<OptionsItem>()
                     {
+                        new OptionsItemKeybindMultiple(containerRect, "1K Gameplay Layout", new List<Bindable<Keys>>()
+                        {
+                            ConfigManager.KeyMania1K1,
+                        }),
                         new OptionsItemKeybindMultiple(containerRect, "4K Gameplay Layout", new List<Bindable<Keys>>()
                         {
                             ConfigManager.KeyMania4K1,

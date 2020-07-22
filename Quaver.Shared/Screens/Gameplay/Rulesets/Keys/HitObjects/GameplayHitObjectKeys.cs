@@ -541,11 +541,14 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
         {
             switch (mode)
             {
+                case GameMode.Keys1:
+                    // Already downwards
+                    break;
                 case GameMode.Keys4:
                     switch (lane)
                     {
                         case 0:
-                            return  90;
+                            return 90;
                         case 1:
                             // Already downwards
                             break;

@@ -254,6 +254,10 @@ namespace Quaver.Shared.Screens.Editor.UI.Rulesets.Keys
         {
             switch (Screen.Ruleset.WorkingMap.Mode)
             {
+                case GameMode.Keys1:
+                    ConfigManager.ScrollDirection1K.Value = ConfigManager.ScrollDirection1K.Value != ScrollDirection.Down
+                        ? ScrollDirection.Down : ScrollDirection.Up;
+                    break;
                 case GameMode.Keys4:
                     ConfigManager.ScrollDirection4K.Value = ConfigManager.ScrollDirection4K.Value != ScrollDirection.Down
                         ? ScrollDirection.Down : ScrollDirection.Up;

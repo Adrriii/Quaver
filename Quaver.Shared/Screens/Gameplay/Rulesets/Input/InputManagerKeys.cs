@@ -356,6 +356,9 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Input
 
             switch (Ruleset.Screen.Map.Mode)
             {
+                case GameMode.Keys1:
+                    scrollSpeed = ConfigManager.ScrollSpeed1K;
+                    break;
                 case GameMode.Keys4:
                     scrollSpeed = ConfigManager.ScrollSpeed4K;
                     break;
@@ -396,6 +399,12 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Input
         {
             switch (mode)
             {
+                case GameMode.Keys1:
+                    BindingStore = new List<InputBindingKeys>
+                        {
+                            new InputBindingKeys(ConfigManager.KeyMania1K1),
+                        };
+                    break;
                 case GameMode.Keys4:
                     // Initialize 4K Input button container.
                     if (!Ruleset.Screen.Map.HasScratchKey)

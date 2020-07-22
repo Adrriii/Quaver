@@ -422,15 +422,19 @@ namespace Quaver.Shared.Screens.Selection.UI.Mapsets
         /// <returns></returns>
         private Texture2D GetGameModeImage()
         {
-            var has4k = false;
+            var has1K = false;
+            var has4K = false;
             var has7K = false;
 
             foreach (var map in ParentMapset.Item.Maps)
             {
                 switch (map.Mode)
                 {
+                    case GameMode.Keys1:
+                        has1K = true;
+                        break;
                     case GameMode.Keys4:
-                        has4k = true;
+                        has4K = true;
                         break;
                     case GameMode.Keys7:
                         has7K = true;
@@ -438,9 +442,11 @@ namespace Quaver.Shared.Screens.Selection.UI.Mapsets
                 }
             }
 
-            if (has4k && !has7K)
+            if (has1K && !has4K && !has7K)
+                return UserInterface.Keys1Panel;
+            if (has4K && !has1K && !has7K)
                 return UserInterface.Keys4Panel;
-            if (has7K && !has4k)
+            if (has7K && !has1K && !has4K)
                 return UserInterface.Keys7Panel;
 
             return UserInterface.BothModesPanel;

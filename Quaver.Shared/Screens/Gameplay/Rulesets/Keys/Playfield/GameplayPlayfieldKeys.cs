@@ -232,6 +232,9 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.Playfield
             ScrollDirection direction;
             switch (Ruleset.Map.Mode)
             {
+                case GameMode.Keys1:
+                    direction = ConfigManager.ScrollDirection1K.Value;
+                    break;
                 case GameMode.Keys4:
                     direction = ConfigManager.ScrollDirection4K.Value;
                     break;

@@ -197,6 +197,9 @@ namespace Quaver.Shared.Screens.Editor.UI.Dialogs.Metadata
             {
                 switch (s)
                 {
+                    case "1 Key":
+                        Dialog.Screen.WorkingMap.Mode = GameMode.Keys1;
+                        break;
                     case "4 Keys":
                         Dialog.Screen.WorkingMap.Mode = GameMode.Keys4;
                         break;

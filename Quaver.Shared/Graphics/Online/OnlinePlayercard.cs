@@ -226,11 +226,14 @@ namespace Quaver.Shared.Graphics.Online
             {
                 switch (ConfigManager.SelectedGameMode.Value)
                 {
+                    case API.Enums.GameMode.Keys1:
+                        options.Add(new MenuDialogOption("Change game mode to 4 Keys", () => ConfigManager.SelectedGameMode.Value = API.Enums.GameMode.Keys4));
+                        break;
                     case API.Enums.GameMode.Keys4:
                         options.Add(new MenuDialogOption("Change game mode to 7 Keys", () => ConfigManager.SelectedGameMode.Value = API.Enums.GameMode.Keys7));
                         break;
                     case API.Enums.GameMode.Keys7:
-                        options.Add(new MenuDialogOption("Change game mode to 4 Keys", () => ConfigManager.SelectedGameMode.Value = API.Enums.GameMode.Keys4));
+                        options.Add(new MenuDialogOption("Change game mode to 1 Keys", () => ConfigManager.SelectedGameMode.Value = API.Enums.GameMode.Keys1));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

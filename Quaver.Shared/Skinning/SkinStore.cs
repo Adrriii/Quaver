@@ -244,6 +244,7 @@ namespace Quaver.Shared.Skinning
             // Load up Keys game mode skins.
             Keys = new Dictionary<GameMode, SkinKeys>
             {
+                {GameMode.Keys1, new SkinKeys(this, GameMode.Keys1)},
                 {GameMode.Keys4, new SkinKeys(this, GameMode.Keys4)},
                 {GameMode.Keys7, new SkinKeys(this, GameMode.Keys7)}
             };

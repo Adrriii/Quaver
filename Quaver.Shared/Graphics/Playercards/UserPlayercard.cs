@@ -211,11 +211,14 @@ namespace Quaver.Shared.Graphics.Playercards
             {
                 switch (ActiveMode)
                 {
+                    case GameMode.Keys1:
+                        ActiveMode = GameMode.Keys4;
+                        break;
                     case GameMode.Keys4:
                         ActiveMode = GameMode.Keys7;
                         break;
                     case GameMode.Keys7:
-                        ActiveMode = GameMode.Keys4;
+                        ActiveMode = GameMode.Keys1;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -367,6 +370,8 @@ namespace Quaver.Shared.Graphics.Playercards
         {
             switch (ActiveMode)
             {
+                case GameMode.Keys1:
+                    return UserInterface.Mode1KOn;
                 case GameMode.Keys4:
                     return UserInterface.Mode4KOn;
                 case GameMode.Keys7:
