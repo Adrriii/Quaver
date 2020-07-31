@@ -33,7 +33,7 @@ Those are the features still present in this version :
 Getting started with **Quaver** development is extremely easy.
 
 * Install the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
-* Clone the Quaver repository and its submodules `git clone --single-branch --branch offline --recurse-submodules https://github.com/Adrriii/Quaver`
+* Clone the Quaver repository and its submodules `git clone --single-branch --branch offline-custom --recurse-submodules https://github.com/Adrriii/Quaver`
 * Build & run Quaver with `dotnet run --project Quaver`
 
 ## Contributing 
