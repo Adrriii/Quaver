@@ -927,27 +927,6 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
 
                         Tooltip(plugin.Description);
 
-                        if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_UploadToWorkshop")))
-                        {
-                            var item = new SteamWorkshopItem(plugin.Name, $"{WobbleGame.WorkingDirectory}Plugins/{plugin.Directory}");
-
-                            if (!item.HasUploaded && (SteamWorkshopItem.Current == null || SteamWorkshopItem.Current.HasUploaded))
-                            {
-                                NotificationManager.Show(NotificationLevel.Info,
-                                    LocalizationManager.Get("Screen_Editor_UploadingPluginToWorkshop"));
-
-                                ThreadScheduler.Run(() =>
-                                {
-                                    item.Upload();
-
-                                    while (!item.HasUploaded)
-                                        Thread.Sleep(50);
-
-                                    NotificationManager.Show(NotificationLevel.Success,
-                                        LocalizationManager.Get("Screen_Editor_PluginUploadedToWorkshop"));
-                                });
-                            }
-                        }
 
                         if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_OpenFolder")))
                             Utils.NativeUtils.OpenNatively($"{WobbleGame.WorkingDirectory}Plugins/{plugin.Directory}");

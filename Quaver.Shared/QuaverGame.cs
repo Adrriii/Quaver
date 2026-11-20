@@ -105,7 +105,6 @@ using Quaver.Shared.Screens.Tests.Volume;
 using Quaver.Shared.Screens.Theater;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Window;
-using Steamworks;
 using Wobble;
 using Wobble.Audio;
 using Wobble.Audio.Samples;
@@ -492,9 +491,6 @@ namespace Quaver.Shared
             GlobalGameplayAssets.Dispose();
             UserGroupAssets.Dispose();
             base.UnloadContent();
-
-            if (SteamManager.IsInitialized)
-                SteamAPI.Shutdown();
         }
 
         /// <inheritdoc />
@@ -508,9 +504,6 @@ namespace Quaver.Shared
                 return;
 
             base.Update(gameTime);
-
-            if (SteamManager.IsInitialized)
-                SteamAPI.RunCallbacks();
 
             if (!FirstUpdateCalled)
             {

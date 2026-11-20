@@ -112,12 +112,6 @@ namespace Quaver
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
             NativeAssemblies.Copy();
-#if VISUAL_TESTS
-            SteamManager.Initialize(false, false);
-#else
-            SteamManager.Initialize();
-#endif
-
 #if !VISUAL_TESTS
             RegisterNativeIntegration();
 #endif

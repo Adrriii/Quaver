@@ -24,7 +24,6 @@ using Quaver.Shared.Database.Scores;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Skinning;
-using Steamworks;
 using Wobble;
 using Wobble.Graphics;
 using Wobble.Graphics.Animations;
@@ -224,7 +223,7 @@ namespace Quaver.Shared.Screens.Gameplay.UI.Scoreboard
                 else
                 {
                     Avatar.Image = ConfigManager.Username?.Value == UsernameRaw
-                        ? SteamManager.GetAvatarOrUnknown(SteamUser.GetSteamID().m_SteamID)
+                        ? SteamManager.GetAvatarOrUnknown(0UL)
                         : UserInterface.UnknownAvatar;
                 }
             }

@@ -2,7 +2,6 @@ using System.Text.RegularExpressions;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
-using Steamworks;
 using Wobble.Graphics;
 using Wobble.Graphics.UI.Dialogs;
 using Wobble.Graphics.UI.Form;

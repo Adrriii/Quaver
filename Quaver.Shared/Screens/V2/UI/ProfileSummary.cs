@@ -7,7 +7,6 @@ using Quaver.Shared.Config;
 using Quaver.Shared.Graphics;
 using Quaver.Shared.Online;
 using Quaver.Shared.Skinning.V2;
-using Steamworks;
 using Wobble;
 using Wobble.Bindables;
 using Wobble.Graphics;
@@ -169,7 +168,7 @@ namespace Quaver.Shared.Screens.V2.UI
 
             if (OnlineManager.Status.Value == ConnectionStatus.Connected && SteamManager.UserAvatars != null)
             {
-                var id = SteamUser.GetSteamID().m_SteamID;
+                var id = 0UL;
                 if (SteamManager.UserAvatars.TryGetValue(id, out var avatar))
                     image = avatar;
             }
@@ -200,7 +199,7 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private void OnSteamAvatarLoaded(object sender, SteamAvatarLoadedEventArgs args)
         {
-            if (SteamUser.GetSteamID().m_SteamID == args.SteamId)
+            if (0UL == args.SteamId)
                 AddScheduledUpdate(() =>
                 {
                     if (!IsDisposed)

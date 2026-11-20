@@ -31,18 +31,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 
-    <None Update="libsteam_api.so">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="libsteam_api.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="steam_api.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="steam_api64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="quaver.sh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -75,7 +63,6 @@
     <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" Version="2.0.6" />
     <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
     <PackageReference Include="UniversalThreadManagement" Version="0.1.0" />
-    <PackageReference Include="Steamworks.NET.AnyCPU" Version="2026.164.0" IncludeAssets="all" />
     <PackageReference Include="WilliamQiufeng.SearchParser" Version="0.2.6-beta.1" />
   </ItemGroup>
 </Project>

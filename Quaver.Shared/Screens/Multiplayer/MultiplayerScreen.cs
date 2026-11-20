@@ -190,10 +190,6 @@ namespace Quaver.Shared.Screens.Multiplayer
         /// </summary>
         public void SetRichPresence()
         {
-            // Friend Grouping of Steam's Enhanced Rich Presence
-            SteamManager.SetRichPresence("steam_player_group", Game.GameId.ToString());
-            SteamManager.SetRichPresence("steam_player_group_size", Game.PlayerIds.Count.ToString());
-
             RichPresenceHelper.UpdateRichPresence($"{Game.Name} ({Game.PlayerIds.Count} of {Game.MaxPlayers})", "Waiting to Start");
         }
 
@@ -201,9 +197,6 @@ namespace Quaver.Shared.Screens.Multiplayer
         /// </summary>
         public void LeaveGame() => Exit(() =>
         {
-            SteamManager.SetRichPresence("steam_player_group", null);
-            SteamManager.SetRichPresence("steam_player_group_size", null);
-
             OnlineManager.LeaveGame();
             ThreadScheduler.RunAfter(Destroy, 1000);
             return QuaverScreenFactory.CreateMultiplayerLobby();

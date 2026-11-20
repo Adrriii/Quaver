@@ -15,7 +15,6 @@ using Quaver.Shared.Assets;
 using Quaver.Shared.Config;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
-using Steamworks;
 using Wobble;
 using Wobble.Assets;
 using Wobble.Bindables;
@@ -330,8 +329,8 @@ namespace Quaver.Shared.Graphics.Online.Playercard
 
             SteamManager.SteamUserAvatarLoaded += OnSteamAvatarLoaded;
 
-            if (Type == PlayercardType.Self && SteamManager.UserAvatars.ContainsKey(SteamUser.GetSteamID().m_SteamID))
-                Avatar.Image = SteamManager.UserAvatars[SteamUser.GetSteamID().m_SteamID];
+            if (Type == PlayercardType.Self && SteamManager.UserAvatars.ContainsKey(0UL))
+                Avatar.Image = SteamManager.UserAvatars[0UL];
             // We've got the user's avatar, so use it.
             else if (User != null && SteamManager.UserAvatars.ContainsKey((ulong)User.OnlineUser.SteamId))
                 Avatar.Image = SteamManager.UserAvatars[(ulong)User.OnlineUser.SteamId];

@@ -1404,9 +1404,6 @@ namespace Quaver.Shared.Screens.Gameplay
             DiscordHelper.Presence.SmallImageKey = ModeHelper.ToShortHand(Ruleset.Mode).ToLower();
             DiscordHelper.Presence.SmallImageText = ModeHelper.ToLongHand(Ruleset.Mode);
             DiscordHelper.UpdatePresence();
-
-            SteamManager.SetRichPresence("State", DiscordHelper.Presence.State);
-            SteamManager.SetRichPresence("Details", Map.ToString());
         }
 
         /// <inheritdoc />

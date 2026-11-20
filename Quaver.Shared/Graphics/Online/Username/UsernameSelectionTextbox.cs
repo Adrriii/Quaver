@@ -7,10 +7,10 @@
 
 using Microsoft.Xna.Framework;
 using Quaver.Shared.Assets;
+using Quaver.Shared.Config;
 using Quaver.Shared.Online;
 using Quaver.Shared.Scheduling;
 using Quaver.Shared.Screens.Menu.UI.Navigation.User;
-using Steamworks;
 using Wobble.Graphics;
 using Wobble.Graphics.UI.Dialogs;
 using Wobble.Graphics.UI.Form;
@@ -69,7 +69,7 @@ namespace Quaver.Shared.Graphics.Online.Username
 
             ThreadScheduler.Run(() =>
             {
-                OnlineManager.Client.ChooseUsername(text, SteamUser.GetSteamID().m_SteamID, SteamFriends.GetPersonaName());
+                OnlineManager.Client.ChooseUsername(text, 0UL, ConfigManager.Username.Value);
             });
         }
 

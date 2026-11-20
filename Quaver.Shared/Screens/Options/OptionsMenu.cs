@@ -265,8 +265,7 @@ namespace Quaver.Shared.Screens.Options
                     }),
                     new OptionsSubcategory("Sharing", new List<OptionsItem>()
                     {
-                        new OptionsItemExportSkin(containerRect, "Export Skin"),
-                        new OptionsItemUploadSkinToWorkshop(containerRect, "Upload Skin To Steam Workshop")
+                        new OptionsItemExportSkin(containerRect, "Export Skin")
                     }),
                     new OptionsSubcategory("Configuration", new List<OptionsItem>()
                     {

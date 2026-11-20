@@ -11,7 +11,6 @@ using Quaver.Shared.Config;
 using Quaver.Shared.Graphics.Dialogs.Menu;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
-using Steamworks;
 using Wobble.Assets;
 using Wobble.Bindables;
 using Wobble.Graphics;
@@ -88,7 +87,7 @@ namespace Quaver.Shared.Graphics.Online
                 Alignment = Alignment.MidLeft,
                 Size = new ScalableVector2(Height * 0.75f, Height * 0.75f),
                 X = 12,
-                Image = SteamManager.GetAvatarOrUnknown(SteamUser.GetSteamID().m_SteamID)
+                Image = SteamManager.GetAvatarOrUnknown(0UL)
             };
 
             Avatar.AddBorder(Color.White, 2);

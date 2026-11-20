@@ -14,7 +14,6 @@ using Quaver.Shared.Online;
 using Quaver.Shared.Screens.Menu.UI.Jukebox;
 using Quaver.Shared.Screens.Results;
 using Quaver.Shared.Skinning;
-using Steamworks;
 using Wobble;
 using Wobble.Assets;
 using Wobble.Bindables;
@@ -702,7 +701,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             var steamId = (ulong) Score.Item.SteamId;
 
             if (ConfigManager.LeaderboardSection?.Value == LeaderboardType.Local)
-                steamId = SteamUser.GetSteamID().m_SteamID;
+                steamId = 0UL;
 
             lock (Avatar)
             lock (Avatar.Image)

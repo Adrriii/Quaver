@@ -9,7 +9,6 @@ using Quaver.Shared.Graphics.Backgrounds;
 using Quaver.Shared.Graphics.Transitions;
 using Quaver.Shared.Online;
 using Quaver.Shared.Skinning;
-using Steamworks;
 using Wobble;
 using Wobble.Graphics.UI.Buttons;
 using Wobble.Logging;
@@ -73,8 +72,6 @@ namespace Quaver.Shared.Screens.V2.Initialization
             game.PerformGameSetup();
 
             token.ThrowIfCancellationRequested();
-            if (SteamManager.IsInitialized)
-                SteamManager.SendAvatarRetrievalRequest(SteamUser.GetSteamID().m_SteamID);
 
             BackgroundHelper.Initialize();
             game.CreateFpsCounter();

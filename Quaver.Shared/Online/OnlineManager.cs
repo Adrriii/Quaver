@@ -49,7 +49,6 @@ using Quaver.Shared.Screens.MultiplayerLobby.UI.Dialogs;
 using Quaver.Shared.Screens.Music;
 using Quaver.Shared.Screens.Selection.UI.Leaderboard;
 using Quaver.Shared.Screens.Tournament;
-using Steamworks;
 using Wobble;
 using Wobble.Bindables;
 using Wobble.Graphics.UI.Dialogs;
@@ -88,16 +87,6 @@ namespace Quaver.Shared.Online
                 _client = value;
             }
         }
-
-        /// <summary>
-        ///     Keeps Steam achievement call results rooted until Steam dispatches the pending API callback.
-        /// </summary>
-        private static List<SteamAchievements> PendingSteamAchievements { get; } = new List<SteamAchievements>();
-
-        /// <summary>
-        ///     Lock used for pending Steam achievement call result lifetime management.
-        /// </summary>
-        private static object PendingSteamAchievementsLock { get; } = new object();
 
         /// <summary>
         ///     The current online connection status.
@@ -210,42 +199,8 @@ namespace Quaver.Shared.Online
         /// </summary>
         public static void Login()
         {
-            if (Status.Value != ConnectionStatus.Disconnected)
-                return;
-
-            Logger.Important($"Attempting to log into the Quaver server...", LogType.Network);
-
-            // Create the new online client and subscribe to all of its online events.
-            if (Client == null)
-            {
-                Client = new OnlineClient();
-                SubscribeToEvents();
-            }
-
-            // TODO: Replace with some backend request to check if users have accepted both.
-            if (!ConfigManager.AcceptedTermsAndPrivacyPolicy.Value)
-            {
-                Logger.Important($"Player needs to accept TOS & Privacy Policy...", LogType.Runtime);
-
-                DialogManager.Show(new LoadingDialog("PLEASE WAIT", "Loading Terms of Service. Please wait...", () =>
-                {
-                    try
-                    {
-                        var dialog = new TermsOfServiceDialog();
-                        DialogManager.Show(dialog);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Error(e, LogType.Runtime);
-                        NotificationManager.Show(NotificationLevel.Error, "There was an issue while fetching the Terms of Service document.");
-                    }
-                }));
-
-                return;
-            }
-
-            // Initiate the connection to the game server.
-            Client.Connect(SteamUser.GetSteamID().m_SteamID, SteamFriends.GetPersonaName(), false);
+            Logger.Important("Online features are not available in this offline build.", LogType.Network);
+            NotificationManager.Show(NotificationLevel.Info, "Online features are not available in this offline build.");
         }
 
         /// <summary>
@@ -617,10 +572,6 @@ namespace Quaver.Shared.Online
 
             Self.Stats[e.Response.GameMode] = e.Response.Stats.ToUserStats(e.Response.GameMode);
 
-            // Unlock any achievements
-            if (e.Response.Achievements != null && e.Response.Achievements.Count > 0)
-                UnlockSteamAchievements(e.Response.Achievements);
-
             try
             {
                 DiscordHelper.Presence.LargeImageText = GetRichPresenceLargeKeyText(e.Response.GameMode);
@@ -631,30 +582,6 @@ namespace Quaver.Shared.Online
             {
                 Logger.Error(ex, LogType.Runtime);
             }
-        }
-
-        /// <summary>
-        ///     Unlocks achievements through Steam while holding onto the call result wrapper until it completes.
-        /// </summary>
-        /// <param name="achievements"></param>
-        private static void UnlockSteamAchievements(List<ScoreSubmissionResponseAchievement> achievements)
-        {
-            var steamAchievements = new SteamAchievements(achievements, OnSteamAchievementsCompleted);
-
-            lock (PendingSteamAchievementsLock)
-                PendingSteamAchievements.Add(steamAchievements);
-
-            steamAchievements.Unlock();
-        }
-
-        /// <summary>
-        ///     Removes completed Steam achievement calls from the rooted pending list.
-        /// </summary>
-        /// <param name="steamAchievements"></param>
-        private static void OnSteamAchievementsCompleted(SteamAchievements steamAchievements)
-        {
-            lock (PendingSteamAchievementsLock)
-                PendingSteamAchievements.Remove(steamAchievements);
         }
 
         /// <summary>

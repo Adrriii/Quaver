@@ -215,8 +215,6 @@ namespace Quaver.Shared.Screens.V2.Main
                 ModeHelper.ToShortHand(ConfigManager.SelectedGameMode.Value).ToLower();
             DiscordHelper.Presence.SmallImageText = ModeHelper.ToLongHand(ConfigManager.SelectedGameMode.Value);
 
-            SteamManager.SetRichPresence("steam_player_group", null);
-            SteamManager.SetRichPresence("steam_player_group_size", null);
             Helpers.RichPresenceHelper.UpdateRichPresence("In the menus", "Main Menu");
         }
 

@@ -173,18 +173,6 @@ namespace Quaver.Shared.Options
 
         public static void ExportSkin() => SkinManager.Export();
 
-        public static void UploadSkin()
-        {
-            if (string.IsNullOrEmpty(ConfigManager.Skin.Value) || ConfigManager.Skin.Value == "Default Skin")
-            {
-                NotificationManager.Show(NotificationLevel.Warning, "You currently do not have a selected custom skin!");
-                return;
-            }
-
-            var skin = new SteamWorkshopItem(ConfigManager.Skin.Value, SkinManager.Skin.Dir.Replace("\\", "/"));
-            if (!skin.HasUploaded)
-                DialogManager.Show(new UploadWorkshopSkinDialog(skin));
-        }
 
         public static void OpenGameFolder()
         {

@@ -393,8 +393,7 @@ namespace Quaver.Shared.Screens.V2.Options.Model
                 ("skin.navigation.generate-v2-config", "GenerateEditableskinyml", ActionButton("GENERATE", () => OptionsActions.GenerateSkinConfig(useV2Dialog: true))));
 
             AddSection(options, OptionCategory.Skin, "Sharing",
-                ("skin.sharing.export", "ExportSkin", ActionButton("EXPORT SKIN", OptionsActions.ExportSkin)),
-                ("skin.sharing.upload-workshop", "UploadSkinToSteamWorkshop", ActionButton("UPLOAD", OptionsActions.UploadSkin, "#27B06E")));
+                ("skin.sharing.export", "ExportSkin", ActionButton("EXPORT SKIN", OptionsActions.ExportSkin)));
 
             AddSection(options, OptionCategory.Skin, "Configuration",
                 ("skin.configuration.note-scale", "NoteReceptorSizeScale", Slider(() => ConfigManager.GameplayNoteScale, 2, 100)),

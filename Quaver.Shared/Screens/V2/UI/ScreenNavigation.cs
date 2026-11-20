@@ -23,7 +23,6 @@ using Quaver.Shared.Screens.V2.Profile;
 using Quaver.Shared.Screens.V2.SkinEditor;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
-using Steamworks;
 using Wobble;
 using Wobble.Bindables;
 using Wobble.Graphics;

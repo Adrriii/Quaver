@@ -5,7 +5,6 @@ using Quaver.Shared.Graphics;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Skinning;
-using Steamworks;
 using Wobble;
 using Wobble.Assets;
 using Wobble.Bindables;
@@ -45,7 +44,7 @@ namespace Quaver.Shared.Screens.Results.UI.Header.Contents
                 var steamId = processor.Value.SteamId;
 
                 if (ConfigManager.Username.Value == processor.Value.PlayerName)
-                    steamId = SteamUser.GetSteamID().m_SteamID;
+                    steamId = 0UL;
 
                 if (steamId != 0 && SteamManager.UserAvatarsLarge.ContainsKey(steamId))
                 {

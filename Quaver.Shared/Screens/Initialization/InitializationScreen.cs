@@ -10,7 +10,6 @@ using Quaver.Shared.Graphics.Transitions;
 using Quaver.Shared.Online;
 using Quaver.Shared.Screens.Main;
 using Quaver.Shared.Skinning;
-using Steamworks;
 using Wobble;
 using Wobble.Logging;
 using Wobble.Scheduling;
@@ -68,9 +67,6 @@ namespace Quaver.Shared.Screens.Initialization
 
             game.SetProcessPriority();
             game.PerformGameSetup();
-
-            if (SteamManager.IsInitialized)
-                SteamManager.SendAvatarRetrievalRequest(SteamUser.GetSteamID().m_SteamID);
 
             BackgroundHelper.Initialize();
 

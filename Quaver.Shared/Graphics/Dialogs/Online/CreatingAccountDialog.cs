@@ -1,6 +1,6 @@
 using System;
+using Quaver.Shared.Config;
 using Quaver.Shared.Online;
-using Steamworks;
 
 namespace Quaver.Shared.Graphics.Dialogs.Online
 {
@@ -9,7 +9,7 @@ namespace Quaver.Shared.Graphics.Dialogs.Online
         public CreatingAccountDialog(string username) : base("CREATING ACCOUNT", "Your account is being created. Please wait!",
             () =>
             {
-                OnlineManager.Client.ChooseUsername(username, SteamUser.GetSteamID().m_SteamID, SteamFriends.GetPersonaName());
+                OnlineManager.Client.ChooseUsername(username, 0UL, ConfigManager.Username.Value);
             })
         {
         }
